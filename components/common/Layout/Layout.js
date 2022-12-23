@@ -6,7 +6,6 @@ import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { useTheme } from "next-themes";
 import { getSiteMetaData } from "@utils/helpers";
 
-
 export function Layout({ children }) {
   return (
     <div className="w-full min-h-screen bg-cream dark:bg-dark-blue dark:text-white">
@@ -15,7 +14,9 @@ export function Layout({ children }) {
         <main>{children}</main>
         <footer className="text-lg font-light">
           © {new Date().getFullYear()}, Built with{" "}
-          <a className="text-dark-red" href="https://nextjs.org/">Next.js</a>
+          <a className="text-dark-red" href="https://nextjs.org/">
+            Next.js
+          </a>
           &#128293;
         </footer>
       </div>
@@ -24,14 +25,14 @@ export function Layout({ children }) {
 }
 
 const Header = () => {
-  const { theme, setTheme, systemTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const { pathname } = useRouter();
   const [mounted, setMounted] = useState(false);
-  
+
   useEffect(() => setMounted(true), []);
 
   const toggleDarkMode = (checked) => {
-    if (checked ) setTheme("dark");
+    if (checked) setTheme("dark");
     else setTheme("light");
   };
 
@@ -46,7 +47,11 @@ const Header = () => {
       })}
     >
       <div className={"max-w-md"}>
-        {isRoot ? <LargeTitle title={siteMetadata.title} /> : <SmallTitle title={siteMetadata.title} />}
+        {isRoot ? (
+          <LargeTitle title={siteMetadata.title} />
+        ) : (
+          <SmallTitle title={siteMetadata.title} />
+        )}
       </div>
       {mounted && (
         <DarkModeSwitch
@@ -56,10 +61,10 @@ const Header = () => {
         />
       )}
     </header>
-  );``
+  );
 };
 
-const LargeTitle = ({title}) => (
+const LargeTitle = ({ title }) => (
   <h1>
     <Link href="/">
       <a
@@ -75,7 +80,7 @@ const LargeTitle = ({title}) => (
   </h1>
 );
 
-const SmallTitle = ({title}) => (
+const SmallTitle = ({ title }) => (
   <h1>
     <Link href="/">
       <a

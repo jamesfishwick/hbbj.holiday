@@ -24,57 +24,75 @@ function getFormattedDate(date) {
 }
 
 function formatPlaylist(playlist, directory) {
-  return playlist.map(function (item){
-    const title = item.title.split('-');
+  return playlist.map(function (item) {
+    const title = item.title.split("-");
     return {
       name: title[0].trim(),
       singer: title[1].trim(),
-      musicSrc: `/${directory}/${item.file.split('/').pop()}`,
+      musicSrc: `/${directory}/${item.file.split("/").pop()}`,
       cover: `/${directory}/${directory}.jpg`,
-    }
-  })
+    };
+  });
+}
+
+function handleError(err) {
+  console.log("Ohhhh nooo");
+  console.error(err);
 }
 
 export async function getSortedMixes() {
   const postFolders = getMixesFolders();
 
-  const mixes = postFolders
-    .map(async ({ filename, directory, playlist }) => {
-      // Get raw content from file
-      const markdownWithMetadata = fs
-        .readFileSync(`content/mixes/${directory}/${filename}`)
-        .toString();
+  const mixes = postFolders.map(async ({ filename, directory, playlist }) => {
+    // Get raw content from file
 
-      // Parse markdown, get frontmatter data, excerpt and content.
-      const { data, excerpt, content } = matter(markdownWithMetadata);
+    const markdownWithMetadata = fs
+      .readFileSync(`content/mixes/${directory}/${filename}`)
+      .toString();
 
-      const frontmatter = {
-        ...data,
-        date: getFormattedDate(data.date),
-      };
+    // Parse markdown, get frontmatter data, excerpt and content.
+    const { data, excerpt, content } = matter(markdownWithMetadata);
 
-      // Remove .md file extension from post name
-      const slug = filename.replace(".md", "");
-      const playlistData = fs.readFileSync(`content/mixes/${directory}/${playlist}`, 'utf8');
-      const playlistObj = await m3u.parse(playlistData);
-      const formattedPlaylist = formatPlaylist(playlistObj, directory);
+    const frontmatter = {
+      ...data,
+      date: getFormattedDate(data.date),
+    };
 
-      return {
-        slug,
-        frontmatter,
-        excerpt,
-        content,
-        playlist: formattedPlaylist,
-      };
-    });
+    // Remove .md file extension from post name
+    const slug = filename.replace(".md", "");
+    let playlistData;
+    let playlistObj;
+    let formattedPlaylist = [];
+    const playlistPath = `content/mixes/${directory}/${playlist}`;
+
+    try {
+      if (fs.existsSync(playlistPath)) {
+        //file exists
+        playlistData = fs.readFileSync(playlistPath, "utf8");
+      }
+    } catch (err) {
+      handleError(err);
+    }
+
+    if (playlistData) {
+      playlistObj = await m3u.parse(playlistData).catch(handleError);
+      formattedPlaylist = formatPlaylist(playlistObj, directory);
+    }
+
+    return {
+      slug,
+      frontmatter,
+      excerpt,
+      content,
+      playlist: formattedPlaylist,
+    };
+  });
 
   const resolvedPosts = await Promise.all(mixes);
 
-  return resolvedPosts.sort(
-    (a, b) => {
-      return new Date(b.frontmatter.date) - new Date(a.frontmatter.date);
-    }
-  );
+  return resolvedPosts.sort((a, b) => {
+    return new Date(b.frontmatter.date) - new Date(a.frontmatter.date);
+  });
 }
 
 export function getPostsSlugs() {
@@ -99,5 +117,10 @@ export async function getPostBySlug(slug) {
   const previousPost = mixes[postIndex + 1];
   const nextPost = mixes[postIndex - 1];
 
-  return { frontmatter, post: { content, excerpt, playlist }, previousPost, nextPost };
+  return {
+    frontmatter,
+    post: { content, excerpt, playlist },
+    previousPost,
+    nextPost,
+  };
 }

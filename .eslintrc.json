@@ -1,0 +1,43 @@
+{
+	"extends": [
+		"eslint:recommended",
+		"plugin:prettier/recommended",
+		"next/core-web-vitals",
+		"plugin:react/recommended"
+	],
+	"plugins": [
+		"prettier",
+		"react",
+		"react-hooks"
+	],
+	"rules": {
+		"eqeqeq": "error",
+		"no-console": "warn",
+		"prettier/prettier": "error",
+		"react/display-name": "off",
+    "react/prop-types": "off",
+		"react/no-children-prop": "off",
+		"react/react-in-jsx-scope": "off",
+		"react-hooks/rules-of-hooks": "error",
+		"react-hooks/exhaustive-deps": "warn"
+	},
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+	"env": {
+		"browser": true,
+		"node": true,
+		"es6": true,
+		"jest": true
+	},
+	"ignorePatterns": [
+		"node_modules",
+		"build",
+		"dist",
+		"public"
+	]
+}

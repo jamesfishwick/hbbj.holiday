@@ -4,7 +4,7 @@ import { Image } from "..";
 import { getSiteMetaData } from "@utils/helpers";
 
 export function Bio({ className }) {
-  const { author, social } = getSiteMetaData();
+  const { author } = getSiteMetaData();
 
   return (
     <div className={clsx(`flex items-center`, className)}>
@@ -18,13 +18,13 @@ export function Bio({ className }) {
 
       <p className="text-base leading-7">
         Compiled by <b className="font-semibold">{author.name}</b>{" "}
-        {author.summary}{" "}
-        <br />
-        <em><a href="https://www.instagram.com/sirlordselector/">
-          Follow him on Instagram
-        </a></em>
+        {author.summary} <br />
+        <em>
+          <a href="https://www.instagram.com/sirlordselector/">
+            Follow him on Instagram
+          </a>
+        </em>
       </p>
-     
     </div>
   );
 }
