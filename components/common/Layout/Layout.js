@@ -9,6 +9,50 @@ import { getSiteMetaData } from "@utils/helpers";
 export function Layout({ children }) {
   return (
     <div className="w-full min-h-screen bg-cream dark:bg-dark-blue dark:text-white">
+      <ul className="lightrope">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
       <div className="max-w-screen-sm px-4 py-12 mx-auto antialiased font-body">
         <Header />
         <main>{children}</main>
@@ -43,6 +87,7 @@ const Header = () => {
     <header
       className={clsx("flex items-center justify-between ", {
         "mb-8": isRoot,
+        "mt-8": isRoot,
         "mb-2": !isRoot,
       })}
     >
