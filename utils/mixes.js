@@ -1,6 +1,6 @@
 import matter from "gray-matter";
 import fs from "fs";
-import m3u from "utils/m3u";
+import { Parser } from "m3u8-parser";
 
 export function getMixesFolders() {
   // Get all mixes folders located in `content/mixes`
@@ -24,12 +24,12 @@ function getFormattedDate(date) {
 }
 
 function formatPlaylist(playlist, directory) {
-  return playlist.map(function (item) {
+  return playlist.segments.map(function (item) {
     const title = item.title.split("-");
     return {
       name: title[0].trim(),
       singer: title[1].trim(),
-      musicSrc: `/${directory}/${item.file.split("/").pop()}`,
+      musicSrc: `/${directory}/${item.uri.split("/").pop()}`,
       cover: `/${directory}/${directory}.jpg`,
     };
   });
@@ -74,9 +74,15 @@ export async function getSortedMixes() {
       handleError(err);
     }
 
-    if (playlistData) {
-      playlistObj = await m3u.parse(playlistData).catch(handleError);
-      formattedPlaylist = formatPlaylist(playlistObj, directory);
+    try {
+      if (playlistData) {
+        const parser = new Parser();
+        parser.push(playlistData);
+        parser.end();
+        formattedPlaylist = formatPlaylist(parser.manifest, directory);
+      }
+    } catch (err) {
+      handleError(err);
     }
 
     return {
