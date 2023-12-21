@@ -49,7 +49,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
 
     // Play your new play list right after your new play list is loaded turn false.
     // [type `boolean`, default `false`]
-    autoPlayInitLoadPlayList: true,
+    autoPlayInitLoadPlayList: false,
 
     // Whether to load audio immediately after the page loads.  [type `Boolean | String`, default `false`]
     // "auto|metadata|none" "true| false"
@@ -73,7 +73,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
     // if you want dynamic change current play mode you can change it
     // [type`order | orderLoop | singleLoop | shufflePlay`, default `order`]
     // playMode: 'order',
-    defaultPlayMode: "order",
+    defaultPlayMode: "orderLoop",
 
     // audio mode        mini | full          [type `String`  default `mini`]
     mode: "full",
@@ -85,7 +85,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
     once: false,
 
     // Whether the audio is played after loading is completed. [type `Boolean` default 'true']
-    autoPlay: true,
+    autoPlay: false,
 
     // Whether you can switch between two modes, full => mini  or mini => full   [type 'Boolean' default 'true']
     toggleMode: true,
