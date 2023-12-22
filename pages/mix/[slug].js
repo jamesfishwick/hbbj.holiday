@@ -40,7 +40,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
      * (C) is playing
      */
     // [type `boolean`, default `false`]
-    quietUpdate: false,
+    quietUpdate: true,
 
     // Replace a new playlist with the first loaded playlist
     // instead of adding it at the end of it.
@@ -49,7 +49,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
 
     // Play your new play list right after your new play list is loaded turn false.
     // [type `boolean`, default `false`]
-    autoPlayInitLoadPlayList: false,
+    autoPlayInitLoadPlayList: true,
 
     // Whether to load audio immediately after the page loads.  [type `Boolean | String`, default `false`]
     // "auto|metadata|none" "true| false"
@@ -85,7 +85,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
     once: false,
 
     // Whether the audio is played after loading is completed. [type `Boolean` default 'true']
-    autoPlay: false,
+    autoPlay: true,
 
     // Whether you can switch between two modes, full => mini  or mini => full   [type 'Boolean' default 'true']
     toggleMode: true,
