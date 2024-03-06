@@ -1,21 +1,3 @@
-<h1 align="center">
-  Next.js blog starter
-</h1>
-
-Start off your writing journey with this Next.js markdown blog template.
-
-## ✏ Features
-
-- Streamlined styling experience with [Tailwind.css](https://tailwindcss.com/).
-- Customizable typographic defaults with [Tailwind Typography](https://github.com/tailwindlabs/tailwindcss-typography)
-- Automatic image preview and optimization with [next-optimized-images](https://github.com/cyrilwanner/next-optimized-images).
-- Lazyload images.
-- Absolute imports.
-- SEO friendly.
-- Markdown code highlighting with [react-syntax-highlighter](https://www.npmjs.com/package/react-syntax-highlighter) and [PrismJs](https://prismjs.com/).
-- Dark Mode
-- WebP image support
-
 ## 🚀 Getting Started
 
 First, run the development server:
