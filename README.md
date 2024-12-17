@@ -1,51 +1,53 @@
-## 🚀 Getting Started
+# Happy Birthday Baby Jesus
 
-First, run the development server:
+A festive digital archive of Christmas music mixes spanning from 2006 to 2023, curated by Sir Lord Selector (James Fishwick). This site celebrates the eclectic, unexpected, and joyful sounds of the season through carefully crafted playlists that blend genres, eras, and holiday moods.
+
+## About
+
+Happy Birthday Baby Jesus (HBBJ) is a labor of love that has been bringing unconventional Christmas cheer since 2006. Each year features a unique mix of tracks that range from soul to punk, jazz to electronic, and everything in between. The collection includes both beloved classics reimagined and obscure holiday gems rescued from the depths of music history.
+
+## Features
+
+- Responsive design with light/dark mode toggle
+- Full playlist functionality with track listings
+- Archive of mixes from 2006-2023
+- Album artwork for each year's mix
+- Markdown-based content management
+- Built with Next.js for optimal performance
+
+## Technology
+
+This site is built with:
+- Next.js
+- React
+- Tailwind CSS
+- react-jinke-music-player for audio playback
+- Next-optimized-images for image optimization
+- Dark mode support via next-themes
+
+## Development
+
+To run the site locally:
 
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000 to view the site.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Contributing
+This is a personal project maintained by Sir Lord Selector, but if you notice any issues or have suggestions for improvements, please feel free to open an issue.
 
-## ✍ Customizing Tailwind Typography
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-[Tailwind Typography](https://github.com/tailwindlabs/tailwindcss-typography) is an official tailwind plugin that provides a set of `prose` classes to add beautiful typographic defaults to any vanilla HTML you don't control (like HTML rendered from Markdown, or pulled from a CMS).
-
-To customize the defaults provided by the plugin, add the overrides under the `typography` key in the theme section of the `tailwind.config.js` file. Refer to its [default styles](https://github.com/tailwindlabs/tailwindcss-typography/blob/master/src/styles.js) for more in-depth examples.
-
-For more information, please check out Tailwind Typography's [customization section](https://github.com/tailwindlabs/tailwindcss-typography#customization).
-
-## 📖 Learn More
-
-### Next.js
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/zeit/next.js/) - your feedback and contributions are welcome!
-
-### Tailwind CSS
-
-To learn more about Tailwind CSS, take a look at the following resources:
-
-- [Tailwind Documentation](https://tailwindcss.com/) - learn about Tailwind CSS features and API.
-
-## ☑ Upcoming features
-
-- [ ] Add Sitemap
-- [ ] Add RSS Feed
-- [x] Dark Mode
-- [x] Add support for WebP images
-- [x] Add SEO Component
-- [x] Add Dynamic Site Metadata
-
-## ☁ Deploy
+## Credits
+Created and curated by Sir Lord Selector
+Built on the Next.js blog starter template by Jose Felix
+Christmas spirit provided by Baby Jesus
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/two7sclash/hbbj.holiday)

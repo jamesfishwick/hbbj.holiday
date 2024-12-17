@@ -40,7 +40,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
      * (C) is playing
      */
     // [type `boolean`, default `false`]
-    quietUpdate: true,
+    quietUpdate: false,
 
     // Replace a new playlist with the first loaded playlist
     // instead of adding it at the end of it.
@@ -73,7 +73,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
     // if you want dynamic change current play mode you can change it
     // [type`order | orderLoop | singleLoop | shufflePlay`, default `order`]
     // playMode: 'order',
-    defaultPlayMode: "orderLoop",
+    // defaultPlayMode: "orderLoop",
 
     // audio mode        mini | full          [type `String`  default `mini`]
     mode: "full",
@@ -136,7 +136,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
     loadAudioErrorPlayNext: true,
 
     // Auto hide the cover photo if no cover photo is available [type `Boolean` default `false`]
-    autoHiddenCover: false,
+    autoHiddenCover: true,
 
     // Play and pause audio through blank space [type `Boolean` default `false`]
     spaceBar: true,
