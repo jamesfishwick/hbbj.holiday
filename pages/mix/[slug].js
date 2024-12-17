@@ -59,7 +59,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
     glassBg: true,
 
     // The next time you access the player, do you keep the last state  [type `Boolean` default `false`]
-    remember: true,
+    remember: false,
 
     // The Audio Can be deleted  [type `Boolean`, default `true`]
     remove: false,

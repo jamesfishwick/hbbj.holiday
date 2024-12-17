@@ -15,4 +15,5 @@ export const posts = [
   { fileName: "2021" },
   { fileName: "2022" },
   { fileName: "2023" },
+  { fileName: "2024" },
 ];
