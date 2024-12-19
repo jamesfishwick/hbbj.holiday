@@ -1,13 +1,16 @@
 // next.config.js
 const withOptimizedImages = require("next-optimized-images");
 
-const imageOptimizationConig = {
+const imageOptimizationConfig = {
   handleImages: ["jpeg", "jpg", "png", "gif"],
-  // ...other options
+  responsive: {
+    adapter: require("responsive-loader/sharp"),
+  },
+  optimizeImages: true,
 };
 
 module.exports = withOptimizedImages({
-  ...imageOptimizationConig,
+  ...imageOptimizationConfig,
   images: {
     disableStaticImages: true,
   },
