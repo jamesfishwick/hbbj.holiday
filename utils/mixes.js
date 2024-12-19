@@ -25,19 +25,24 @@ function getFormattedDate(date) {
 
 function formatPlaylist(playlist, directory) {
   return playlist.segments.map(function (item) {
-    const title = item.title.split("-");
+    const title = item.title ? item.title.split("-") : ["Unknown", "Unknown"];
+
     return {
-      name: title[0].trim(),
-      singer: title[1].trim(),
+      name: title[0] ? title[0].trim() : "Unknown",
+      singer: title[1] ? title[1].trim() : "Unknown",
       musicSrc: `/${directory}/${item.uri.split("/").pop()}`,
       cover: `/${directory}/${directory}.jpg`,
     };
   });
 }
-
 function handleError(err) {
-  console.log("Ohhhh nooo");
   console.error(err);
+}
+
+function validatePlaylistData(playlistData) {
+  if (!playlistData || typeof playlistData !== "string") {
+    throw new Error("Invalid playlist data");
+  }
 }
 
 export async function getSortedMixes() {
@@ -61,7 +66,6 @@ export async function getSortedMixes() {
     // Remove .md file extension from post name
     const slug = filename.replace(".md", "");
     let playlistData;
-    let playlistObj;
     let formattedPlaylist = [];
     const playlistPath = `content/mixes/${directory}/${playlist}`;
 
@@ -69,20 +73,70 @@ export async function getSortedMixes() {
       if (fs.existsSync(playlistPath)) {
         //file exists
         playlistData = fs.readFileSync(playlistPath, "utf8");
+        validatePlaylistData(playlistData);
+      } else {
+        throw new Error("M3U8 file not found");
       }
     } catch (err) {
       handleError(err);
+      return {
+        slug,
+        frontmatter,
+        excerpt,
+        content,
+        playlist: [],
+        error: err.message,
+      }; // Return empty playlist on error
     }
 
+    // In utils/mixes.js, update the playlist processing section:
+
+    // In utils/mixes.js - update the file reading section
+
     try {
-      if (playlistData) {
+      if (fs.existsSync(playlistPath)) {
+        // Add raw content logging
+        const rawContent = fs.readFileSync(playlistPath, "utf8");
+        console.log(
+          `\nRaw content for ${directory} (first 500 chars):\n${rawContent.slice(
+            0,
+            500
+          )}`
+        );
+
+        // Validate the data
+        validatePlaylistData(rawContent);
+
+        // Now try parsing
         const parser = new Parser();
-        parser.push(playlistData);
+        parser.push(rawContent);
         parser.end();
+
+        if (parser.manifest.segments.length === 0) {
+          console.error(
+            `No segments found in ${directory} playlist. Full content:\n${rawContent}`
+          );
+          throw new Error("Playlist is empty or incorrectly formatted");
+        }
+
         formattedPlaylist = formatPlaylist(parser.manifest, directory);
+        console.log(
+          `Successfully parsed ${formattedPlaylist.length} tracks from ${directory}`
+        );
+      } else {
+        throw new Error("M3U8 file not found");
       }
     } catch (err) {
       handleError(err);
+      console.error(`Full error for ${directory}:`, err);
+      return {
+        slug,
+        frontmatter,
+        excerpt,
+        content,
+        playlist: [],
+        error: `Error processing playlist: ${err.message}`,
+      };
     }
 
     return {
@@ -115,17 +169,20 @@ export function getPostsSlugs() {
 
 export async function getPostBySlug(slug) {
   const mixes = await getSortedMixes();
-
   const postIndex = mixes.findIndex(({ slug: postSlug }) => postSlug === slug);
-
-  const { frontmatter, content, excerpt, playlist } = mixes[postIndex];
+  const { frontmatter, content, excerpt, playlist, error } = mixes[postIndex];
 
   const previousPost = mixes[postIndex + 1];
   const nextPost = mixes[postIndex - 1];
 
   return {
     frontmatter,
-    post: { content, excerpt, playlist },
+    post: {
+      content,
+      excerpt,
+      playlist,
+      error: error || null, // Set error to null if undefined
+    },
     previousPost,
     nextPost,
   };

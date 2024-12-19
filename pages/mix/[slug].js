@@ -173,7 +173,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
           source={post.content}
           renderers={{ image: MarkdownImage }}
         />
-        {post.playlist.length && (
+        {Array.isArray(post.playlist) && post.playlist.length > 0 && (
           <>
             <ol style={{ listStyle: "decimal" }}>
               {post.playlist.map(function (track) {
