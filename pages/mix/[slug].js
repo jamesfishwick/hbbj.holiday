@@ -2,7 +2,7 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown/with-html";
 import ReactJkMusicPlayer from "../player";
 //import 'react-jinke-music-player/assets/index.css'
-import { Layout, Image, SEO, Bio } from "@components/common";
+import { Layout, Image, SEO, Bio, PlaylistDisplay } from "@components/common";
 import { getPostBySlug, getPostsSlugs } from "@utils/mixes";
 
 export default function Post({ post, frontmatter, nextPost, previousPost }) {
@@ -175,13 +175,14 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
         />
         {Array.isArray(post.playlist) && post.playlist.length > 0 && (
           <>
-            <ol style={{ listStyle: "decimal" }}>
+            {/*<ol style={{ listStyle: "decimal" }}>
               {post.playlist.map(function (track) {
                 return (
                   <li key={track.name}>{`${track.singer} - ${track.name}`}</li>
                 );
               })}
-            </ol>
+            </ol>*/}
+            <PlaylistDisplay tracks={post.playlist} />
             <ReactJkMusicPlayer {...options} />
           </>
         )}

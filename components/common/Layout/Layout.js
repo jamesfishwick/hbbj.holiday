@@ -1,14 +1,11 @@
-import { useState, useEffect } from "react";
-import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { DarkModeSwitch } from "react-toggle-dark-mode";
-import { useTheme } from "next-themes";
 import { getSiteMetaData } from "@utils/helpers";
-
+import Search from "../Search/Search";
 export function Layout({ children }) {
   return (
-    <div className="w-full min-h-screen bg-cream dark:bg-dark-blue dark:text-white">
+    <div className="min-h-screen bg-dark-blue">
+      {/* Christmas lights */}
       <ul className="lightrope">
         <li></li>
         <li></li>
@@ -53,12 +50,18 @@ export function Layout({ children }) {
         <li></li>
         <li></li>
       </ul>
-      <div className="max-w-screen-sm px-4 py-12 mx-auto antialiased font-body">
+      {/* ... end lights */}
+
+      {/* Main content */}
+      <div className="page-container mx-auto px-4 py-12 font-body antialiased">
         <Header />
-        <main>{children}</main>
-        <footer className="text-lg font-light">
+        <main className="mt-12">{children}</main>
+        <footer className="site-footer text-lg font-light">
           © {new Date().getFullYear()}, Built with{" "}
-          <a className="text-dark-red" href="https://nextjs.org/">
+          <a
+            href="https://nextjs.org/"
+            className="text-dark-red hover:underline"
+          >
             Next.js
           </a>
           &#128293;
@@ -69,41 +72,25 @@ export function Layout({ children }) {
 }
 
 const Header = () => {
-  const { theme, setTheme } = useTheme();
   const { pathname } = useRouter();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-
-  const toggleDarkMode = (checked) => {
-    if (checked) setTheme("dark");
-    else setTheme("light");
-  };
-
   const isRoot = pathname === "/";
   const siteMetadata = getSiteMetaData();
 
   return (
-    <header
-      className={clsx("flex items-center justify-between ", {
-        "mb-8": isRoot,
-        "mt-8": isRoot,
-        "mb-2": !isRoot,
-      })}
-    >
-      <div className={"max-w-md"}>
-        {isRoot ? (
-          <LargeTitle title={siteMetadata.title} />
-        ) : (
-          <SmallTitle title={siteMetadata.title} />
-        )}
+    <header>
+      <div className="flex items-center justify-between mb-8">
+        <div className="max-w-[80%]">
+          {isRoot ? (
+            <LargeTitle title={siteMetadata.title} />
+          ) : (
+            <SmallTitle title={siteMetadata.title} />
+          )}
+        </div>
       </div>
-      {mounted && (
-        <DarkModeSwitch
-          checked={theme === "dark"}
-          onChange={toggleDarkMode}
-          className={isRoot ? 28 : 24}
-        />
+      {isRoot && (
+        <div className="mt-6 mb-8">
+          <Search />
+        </div>
       )}
     </header>
   );
@@ -112,13 +99,7 @@ const Header = () => {
 const LargeTitle = ({ title }) => (
   <h1>
     <Link href="/">
-      <a
-        className={clsx(
-          "text-3xl font-black leading-none text-teal no-underline font-display",
-          "sm:text-5xl",
-          "dark:text-light-blue"
-        )}
-      >
+      <a className="text-4xl sm:text-5xl font-black leading-tight no-underline font-display text-light-blue hover:text-red-400 transition-colors">
         {title}
       </a>
     </Link>
@@ -128,14 +109,11 @@ const LargeTitle = ({ title }) => (
 const SmallTitle = ({ title }) => (
   <h1>
     <Link href="/">
-      <a
-        className={clsx(
-          "text-2xl font-black text-teal black no-underline font-display",
-          "dark:text-light-blue"
-        )}
-      >
+      <a className="text-2xl font-black no-underline font-display text-light-blue hover:text-red-400 transition-colors">
         {title}
       </a>
     </Link>
   </h1>
 );
+
+export default Layout;
