@@ -139,7 +139,7 @@ export default function Search() {
                       rounded-lg shadow-lg dark:bg-dark-blue dark:border-gray-600 z-50"
         >
           <p className="text-gray-600 dark:text-gray-400">
-            No results found for "{query}"
+            No results found for &ldquo;{query}&rdquo;
           </p>
         </div>
       )}

@@ -64,7 +64,6 @@ export function Layout({ children }) {
           >
             Next.js
           </a>
-          &#128293;
         </footer>
       </div>
     </div>
@@ -79,7 +78,7 @@ const Header = () => {
   return (
     <header>
       <div className="flex items-center justify-between mb-8">
-        <div className="max-w-[80%]">
+        <div className="max-w-[80%] mt-8">
           {isRoot ? (
             <LargeTitle title={siteMetadata.title} />
           ) : (

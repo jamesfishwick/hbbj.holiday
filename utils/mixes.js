@@ -97,12 +97,12 @@ export async function getSortedMixes() {
       if (fs.existsSync(playlistPath)) {
         // Add raw content logging
         const rawContent = fs.readFileSync(playlistPath, "utf8");
-        console.log(
-          `\nRaw content for ${directory} (first 500 chars):\n${rawContent.slice(
-            0,
-            500
-          )}`
-        );
+        // console.log(
+        //   `\nRaw content for ${directory} (first 500 chars):\n${rawContent.slice(
+        //     0,
+        //     500
+        //   )}`
+        // );
 
         // Validate the data
         validatePlaylistData(rawContent);
@@ -120,9 +120,9 @@ export async function getSortedMixes() {
         }
 
         formattedPlaylist = formatPlaylist(parser.manifest, directory);
-        console.log(
-          `Successfully parsed ${formattedPlaylist.length} tracks from ${directory}`
-        );
+        // console.log(
+        //   `Successfully parsed ${formattedPlaylist.length} tracks from ${directory}`
+        // );
       } else {
         throw new Error("M3U8 file not found");
       }
