@@ -1,4 +1,6 @@
-import { getSortedMixes } from "@utils/mixes";
+const fs = require("fs");
+const path = require("path");
+const { getSortedMixes } = require("../utils/mixes");
 
 function generateSiteMap(mixes) {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -25,21 +27,21 @@ function generateSiteMap(mixes) {
  `;
 }
 
-export async function getServerSideProps({ res }) {
-  const mixes = await getSortedMixes();
+async function generateSitemap() {
+  try {
+    const mixes = await getSortedMixes();
+    const sitemap = generateSiteMap(mixes);
+    const publicPath = path.join(process.cwd(), "public", "sitemap.xml");
 
-  const sitemap = generateSiteMap(mixes);
+    fs.writeFileSync(publicPath, sitemap, "utf8");
 
-  res.setHeader("Content-Type", "text/xml");
-  res.write(sitemap);
-  res.end();
-
-  return {
-    props: {},
-  };
+    if (process.env.NODE_ENV !== "production") {
+      console.log("✓ Sitemap generated successfully at public/sitemap.xml");
+    }
+  } catch (err) {
+    console.error("Error generating sitemap:", err);
+    process.exit(1);
+  }
 }
 
-export default function SiteMap() {
-  // getServerSideProps will handle the response
-  return null;
-}
+generateSitemap();

@@ -1,5 +1,5 @@
 [build]
   publish = "out"
-  command = "npm run build && npx next export"
+  command = "node scripts/generate-sitemap.js && npm run build && npx next export"
 
   environment = { NODE_VERSION = "18.17.0" }
