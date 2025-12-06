@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__serena__initial_instructions",
+      "mcp__serena__check_onboarding_performed",
+      "mcp__serena__get_current_config",
+      "mcp__serena__activate_project",
+      "mcp__serena__list_memories",
+      "mcp__serena__list_dir",
+      "mcp__serena__get_symbols_overview",
+      "mcp__serena__find_symbol",
+      "mcp__serena__replace_symbol_body",
+      "mcp__serena__write_memory",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_close",
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_run_code",
+      "Read(//Users/jamesfishwick/Downloads/**)",
+      "Read(//Users/jamesfishwick/Workspace/solutions-architect-challenge/src/services/**)",
+      "Read(//Users/jamesfishwick/Workspace/solutions-architect-challenge/src/api/controllers/**)",
+      "Read(//Users/jamesfishwick/Desktop/**)",
+      "SlashCommand(/sc:analyze --focus quality,performance,security --depth deep)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
