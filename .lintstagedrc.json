@@ -1,0 +1,5 @@
+{
+  "*.{js,jsx}": [
+    "npx @biomejs/biome check --write --unsafe"
+  ]
+}
