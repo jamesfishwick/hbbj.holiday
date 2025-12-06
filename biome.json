@@ -7,7 +7,18 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!**/node_modules", "!**/.next", "!**/out", "!**/public"]
+    "includes": [
+      "**/*.js",
+      "**/*.jsx",
+      "**/*.mjs",
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.json",
+      "!**/node_modules",
+      "!**/.next",
+      "!**/out",
+      "!**/public"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -21,7 +32,9 @@
     "rules": {
       "recommended": true,
       "a11y": {
-        "recommended": true
+        "recommended": true,
+        "useValidAnchor": "off",
+        "noSvgWithoutTitle": "warn"
       },
       "complexity": {
         "recommended": true
@@ -39,7 +52,8 @@
         "recommended": true
       },
       "suspicious": {
-        "recommended": true
+        "recommended": true,
+        "noArrayIndexKey": "warn"
       }
     }
   },

@@ -1,20 +1,19 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+import fs from 'node:fs';
+import path from 'node:path';
 
-const postsDirectory = path.join(process.cwd(), "content/mixes");
+const postsDirectory = path.join(process.cwd(), 'content/mixes');
 
 export function getSortedPostsData() {
   // Get file names under /posts
   const fileNames = fs.readdirSync(postsDirectory);
   const allPostsData = fileNames.map((fileName) => {
     const fullPath = path.format({
-      root: "/ignored",
+      root: '/ignored',
       dir: `${postsDirectory}/${fileName}`,
       base: `${fileName}.m3u8`,
     });
     // Read markdown file as string
-    const fileContents = fs.readFileSync(fullPath, "utf8");
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     // Use gray-matter to parse the post metadata section
     // const matterResult = matter(fileContents)
@@ -48,7 +47,7 @@ export function getAllPostIds() {
 
 export async function getPostData(id) {
   const fullPath = path.join(postsDirectory, `${id}/${id}.md`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
 
   // Use gray-matter to parse the post metadata section
   //const matterResult = matter(fileContents);

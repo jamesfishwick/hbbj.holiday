@@ -1,6 +1,6 @@
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic';
 
-const ReactJkMusicPlayer = dynamic(() => import("react-jinke-music-player"), {
+const ReactJkMusicPlayer = dynamic(() => import('react-jinke-music-player'), {
   ssr: false,
 });
 

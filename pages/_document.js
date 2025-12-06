@@ -1,6 +1,5 @@
-import Document, { Head, Main, NextScript, Html } from "next/document";
-
-import { getSiteMetaData } from "@utils/helpers";
+import { getSiteMetaData } from '@utils/helpers';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 export default class MyDocument extends Document {
   render() {

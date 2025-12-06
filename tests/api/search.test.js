@@ -1,7 +1,7 @@
-import { describe, expect, test, jest, beforeEach } from '@jest/globals';
-import handler from '../../pages/api/search';
-import { mockMixWithPlaylist, mockMixWithoutPlaylist } from '../fixtures/mock-data';
+import { beforeEach, describe, expect, jest, test } from '@jest/globals';
 import * as mixes from '@utils/mixes';
+import handler from '../../pages/api/search';
+import { mockMixWithoutPlaylist, mockMixWithPlaylist } from '../fixtures/mock-data';
 
 // Helper to create mock request/response objects
 const createMockRequest = (method = 'GET', query = {}) => ({
@@ -31,10 +31,7 @@ describe('Search API Handler', () => {
   });
 
   test('happy path returns search results matching query in title', async () => {
-    const mockMixes = [
-      mockMixWithPlaylist,
-      mockMixWithoutPlaylist,
-    ];
+    const mockMixes = [mockMixWithPlaylist, mockMixWithoutPlaylist];
     getSortedMixesSpy.mockResolvedValue(mockMixes);
 
     const req = createMockRequest('GET', { q: '2024' });

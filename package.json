@@ -1,80 +1,78 @@
 {
-    "name": "nextjs-blog-starter",
-    "version": "0.3.0",
-    "description": "A Next.js template for a blog website.",
-    "private": true,
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start",
-        "export": "next export",
-        "cache-posts": "node utils/cache.js",
-        "lint": "next lint",
-        "lint:fix": "next lint:fix"
-    },
-    "dependencies": {
-        "@svgr/webpack": "^6.1.1",
-        "caniuse-lite": "^1.0.30001759",
-        "clsx": "^1.1.1",
-        "eslint-config-prettier": "^8.5.0",
-        "eslint-plugin-prettier": "^4.2.1",
-        "feed": "^4.2.2",
-        "husky": "^7.0.4",
-        "imagemin-mozjpeg": "^9.0.0",
-        "imagemin-optipng": "^8.0.0",
-        "latest-version": "^5.1.0",
-        "lazysizes": "^5.2.2",
-        "lint-staged": "^13.1.0",
-        "lqip-loader": "^2.2.1",
-        "m3u8-parser": "^7.1.0",
-        "next": "12.0.7",
-        "next-compose-plugins": "^2.2.1",
-        "next-lqip-images": "^0.1.0",
-        "next-optimized-images": "^2.6.2",
-        "next-themes": "^0.0.15",
-        "prettier": "^2.8.1",
-        "react": "17.0.2",
-        "react-dom": "17.0.2",
-        "react-jinke-music-player": "^4.19.1",
-        "react-markdown": "^5.0.3",
-        "react-syntax-highlighter": "^15.4.5",
-        "react-toggle-dark-mode": "^1.0.4",
-        "responsive-loader": "^3.1.2",
-        "sharp": "^0.33.5",
-        "typeface-merriweather": "^1.1.13",
-        "typeface-open-sans": "^1.1.13",
-        "url-loader": "^4.1.1",
-        "webp-loader": "^0.6.0"
-    },
-    "devDependencies": {
-        "@tailwindcss/typography": "^0.4.1",
-        "@types/react": "^17.0.0",
-        "autoprefixer": "^10.4.0",
-        "eslint": "^8.30.0",
-        "eslint-config-next": "13.1.0",
-        "eslint-plugin-react": "^7.31.11",
-        "eslint-plugin-react-hooks": "^4.6.0",
-        "file-loader": "^6.2.0",
-        "gray-matter": "^4.0.3",
-        "postcss": "^8.4.4",
-        "prettier-eslint": "^15.0.1",
-        "tailwindcss": "^2.2.19",
-        "webpack": "^5.0.0"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "npm run cache-posts && git add cache/data.js"
-        }
-    },
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Jfelix61/nextjs-starter-blog.git"
-    },
-    "homepage": "https://github.com/Jfelix61/nextjs-starter-blog#readme",
-    "keywords": [
-        "next.js",
-        "blog",
-        "template"
-    ]
+  "name": "nextjs-blog-starter",
+  "version": "0.3.0",
+  "description": "A Next.js template for a blog website.",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "biome check . && next build",
+    "start": "next start",
+    "export": "next export",
+    "cache-posts": "node utils/cache.js",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write ."
+  },
+  "dependencies": {
+    "@svgr/webpack": "^6.1.1",
+    "caniuse-lite": "^1.0.30001759",
+    "clsx": "^1.1.1",
+    "feed": "^4.2.2",
+    "husky": "^7.0.4",
+    "imagemin-mozjpeg": "^9.0.0",
+    "imagemin-optipng": "^8.0.0",
+    "latest-version": "^5.1.0",
+    "lazysizes": "^5.2.2",
+    "lint-staged": "^13.1.0",
+    "lqip-loader": "^2.2.1",
+    "m3u8-parser": "^7.1.0",
+    "next": "12.0.7",
+    "next-compose-plugins": "^2.2.1",
+    "next-lqip-images": "^0.1.0",
+    "next-optimized-images": "^2.6.2",
+    "next-themes": "^0.0.15",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-jinke-music-player": "^4.19.1",
+    "react-markdown": "^5.0.3",
+    "react-syntax-highlighter": "^15.4.5",
+    "react-toggle-dark-mode": "^1.0.4",
+    "responsive-loader": "^3.1.2",
+    "sharp": "^0.33.5",
+    "typeface-merriweather": "^1.1.13",
+    "typeface-open-sans": "^1.1.13",
+    "url-loader": "^4.1.1",
+    "webp-loader": "^0.6.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.8",
+    "@tailwindcss/typography": "^0.4.1",
+    "@types/react": "^17.0.0",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^8.30.0",
+    "eslint-config-next": "13.1.0",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "file-loader": "^6.2.0",
+    "gray-matter": "^4.0.3",
+    "postcss": "^8.4.4",
+    "tailwindcss": "^2.2.19",
+    "webpack": "^5.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run cache-posts && git add cache/data.js"
+    }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jfelix61/nextjs-starter-blog.git"
+  },
+  "homepage": "https://github.com/Jfelix61/nextjs-starter-blog#readme",
+  "keywords": [
+    "next.js",
+    "blog",
+    "template"
+  ]
 }

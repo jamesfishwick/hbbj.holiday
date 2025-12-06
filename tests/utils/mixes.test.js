@@ -1,10 +1,5 @@
-import { describe, expect, test, jest, beforeEach, afterEach } from '@jest/globals';
-import {
-  mockM3U8Content,
-  mockMarkdownContent,
-  mockMixFolders,
-  mockPlaylist,
-} from '../fixtures/mock-data';
+import { afterEach, beforeEach, describe, expect, jest, test } from '@jest/globals';
+import { mockM3U8Content, mockMarkdownContent } from '../fixtures/mock-data';
 
 // Create mock functions that will be shared
 const mockReaddirSync = jest.fn();
@@ -21,7 +16,7 @@ jest.mock('gray-matter');
 jest.mock('m3u8-parser');
 
 // Import mocked modules
-const fs = require('fs');
+const fs = require('node:fs');
 const matter = require('gray-matter');
 const { Parser } = require('m3u8-parser');
 
@@ -33,7 +28,9 @@ matter.mockImplementation(mockMatter);
 Parser.mockImplementation(() => ({
   push: mockParserPush,
   end: mockParserEnd,
-  get manifest() { return mockParserManifest; },
+  get manifest() {
+    return mockParserManifest;
+  },
 }));
 
 // Import tested functions after mocks are configured
@@ -64,9 +61,7 @@ describe('getMixesFolders', () => {
       filename: '2024.md',
       playlist: '2024.m3u8',
     });
-    expect(mockReaddirSync).toHaveBeenCalledWith(
-      expect.stringContaining('content/mixes')
-    );
+    expect(mockReaddirSync).toHaveBeenCalledWith(expect.stringContaining('content/mixes'));
   });
 
   test('returns empty array when no folders found', () => {
@@ -237,15 +232,11 @@ describe('getSortedMixes', () => {
   test('sorts mixes by date in descending order', async () => {
     mockReaddirSync.mockReturnValue(['2024', '2022', '2023']);
     mockExistsSync.mockReturnValue(false);
-    mockReadFileSync.mockImplementation((path) => Buffer.from(mockMarkdownContent));
+    mockReadFileSync.mockImplementation((_path) => Buffer.from(mockMarkdownContent));
 
     let callCount = 0;
     mockMatter.mockImplementation(() => {
-      const dates = [
-        new Date('2024-12-25'),
-        new Date('2022-12-25'),
-        new Date('2023-12-25'),
-      ];
+      const dates = [new Date('2024-12-25'), new Date('2022-12-25'), new Date('2023-12-25')];
       const titles = [2024, 2022, 2023];
       return {
         data: {
@@ -423,15 +414,11 @@ describe('getPostBySlug', () => {
   test('happy path returns mix with previous and next posts', async () => {
     mockReaddirSync.mockReturnValue(['2024', '2023', '2022']);
     mockExistsSync.mockReturnValue(false);
-    mockReadFileSync.mockImplementation((path) => Buffer.from(mockMarkdownContent));
+    mockReadFileSync.mockImplementation((_path) => Buffer.from(mockMarkdownContent));
 
     let callCount = 0;
     mockMatter.mockImplementation(() => {
-      const dates = [
-        new Date('2024-12-25'),
-        new Date('2023-12-25'),
-        new Date('2022-12-25'),
-      ];
+      const dates = [new Date('2024-12-25'), new Date('2023-12-25'), new Date('2022-12-25')];
       const titles = [2024, 2023, 2022];
       return {
         data: {
@@ -456,7 +443,7 @@ describe('getPostBySlug', () => {
   test('first post has no next post', async () => {
     mockReaddirSync.mockReturnValue(['2024', '2023']);
     mockExistsSync.mockReturnValue(false);
-    mockReadFileSync.mockImplementation((path) => Buffer.from(mockMarkdownContent));
+    mockReadFileSync.mockImplementation((_path) => Buffer.from(mockMarkdownContent));
 
     let callCount = 0;
     mockMatter.mockImplementation(() => {
@@ -482,7 +469,7 @@ describe('getPostBySlug', () => {
   test('last post has no previous post', async () => {
     mockReaddirSync.mockReturnValue(['2024', '2023']);
     mockExistsSync.mockReturnValue(false);
-    mockReadFileSync.mockImplementation((path) => Buffer.from(mockMarkdownContent));
+    mockReadFileSync.mockImplementation((_path) => Buffer.from(mockMarkdownContent));
 
     let callCount = 0;
     mockMatter.mockImplementation(() => {

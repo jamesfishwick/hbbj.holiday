@@ -1,9 +1,9 @@
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from 'next-themes';
 
-import "@assets/main.css";
+import '@assets/main.css';
 
-import "typeface-open-sans";
-import "typeface-merriweather";
+import 'typeface-open-sans';
+import 'typeface-merriweather';
 
 export default function MyApp({ Component, pageProps }) {
   return (

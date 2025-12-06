@@ -1,5 +1,3 @@
-import React from "react";
-
 export function PlaylistDisplay({ tracks }) {
   return (
     <div className="bg-white dark:bg-dark-blue rounded-lg shadow-lg p-6 my-8">
@@ -18,16 +16,12 @@ export function PlaylistDisplay({ tracks }) {
             <circle cx="6" cy="18" r="3" />
             <circle cx="18" cy="16" r="3" />
           </svg>
-          <h3 className="text-2xl font-bold text-dark-blue dark:text-cream">
-            Tracklist
-          </h3>
+          <h3 className="text-2xl font-bold text-dark-blue dark:text-cream">Tracklist</h3>
         </div>
 
         {/* Total duration if available */}
         {tracks.length > 0 && (
-          <div className="text-sm text-gray-500 dark:text-gray-400">
-            {tracks.length} tracks
-          </div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">{tracks.length} tracks</div>
         )}
       </div>
 
@@ -41,7 +35,7 @@ export function PlaylistDisplay({ tracks }) {
           >
             {/* Track Number */}
             <span className="w-8 text-right font-mono text-sm text-gray-500 dark:text-gray-400">
-              {String(index + 1).padStart(2, "0")}
+              {String(index + 1).padStart(2, '0')}
             </span>
 
             {/* Track Info */}
@@ -51,9 +45,7 @@ export function PlaylistDisplay({ tracks }) {
                   <h4 className="font-medium text-dark-blue dark:text-cream transition-colors">
                     {track.name}
                   </h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {track.singer}
-                  </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{track.singer}</p>
                 </div>
               </div>
             </div>
@@ -72,10 +64,10 @@ export function PlaylistDisplay({ tracks }) {
 }
 
 const formatDuration = (seconds) => {
-  if (!seconds) return "--:--";
+  if (!seconds) return '--:--';
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
-  return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
+  return `${minutes}:${String(remainingSeconds).padStart(2, '0')}`;
 };
 
 export default PlaylistDisplay;

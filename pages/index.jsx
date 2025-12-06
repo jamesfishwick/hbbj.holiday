@@ -1,7 +1,6 @@
-import Link from "next/link";
-
-import { Layout, Bio, SEO, Image } from "@components/common";
-import { getSortedMixes } from "@utils/mixes";
+import { Bio, Image, Layout, SEO } from '@components/common';
+import { getSortedMixes } from '@utils/mixes';
+import Link from 'next/link';
 
 export default function Home({ mixes }) {
   return (
@@ -12,7 +11,7 @@ export default function Home({ mixes }) {
         <article key={slug} className="mb-8">
           <header className="mb-2">
             <h3 className="mb-2">
-              <Link href={"/mix/[slug]"} as={`/mix/${slug}`}>
+              <Link href={'/mix/[slug]'} as={`/mix/${slug}`}>
                 <a className="text-4xl font-bold font-display text-dark-red dark:text-beige">
                   <Image
                     alt="HBBJ"

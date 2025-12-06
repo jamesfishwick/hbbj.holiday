@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { getSiteMetaData } from "@utils/helpers";
-import Search from "../Search/Search";
+import { getSiteMetaData } from '@utils/helpers';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import Search from '../Search/Search';
 export function Layout({ children }) {
   return (
     <div className="min-h-screen bg-dark-blue">
@@ -57,11 +57,8 @@ export function Layout({ children }) {
         <Header />
         <main className="mt-12">{children}</main>
         <footer className="site-footer text-lg font-light">
-          © {new Date().getFullYear()}, Built with{" "}
-          <a
-            href="https://nextjs.org/"
-            className="text-dark-red hover:underline"
-          >
+          © {new Date().getFullYear()}, Built with{' '}
+          <a href="https://nextjs.org/" className="text-dark-red hover:underline">
             Next.js
           </a>
         </footer>
@@ -72,7 +69,7 @@ export function Layout({ children }) {
 
 const Header = () => {
   const { pathname } = useRouter();
-  const isRoot = pathname === "/";
+  const isRoot = pathname === '/';
   const siteMetadata = getSiteMetaData();
 
   return (

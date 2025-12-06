@@ -9,7 +9,7 @@ jest.mock('../../components/common', () => ({
 }));
 
 // Import after mocking
-const MarkdownImageModule = require('../../pages/mix/[slug]');
+const _MarkdownImageModule = require('../../pages/mix/[slug]');
 
 // Extract MarkdownImage from module exports
 let MarkdownImage;
@@ -19,15 +19,7 @@ beforeAll(() => {
   // For now, we'll create a simple test version
   MarkdownImage = ({ alt, src }) => {
     const { Image } = require('../../components/common');
-    return (
-      <Image
-        alt={alt}
-        src={src}
-        webpSrc={src}
-        previewSrc={src}
-        className="w-full"
-      />
-    );
+    return <Image alt={alt} src={src} webpSrc={src} previewSrc={src} className="w-full" />;
   };
 });
 

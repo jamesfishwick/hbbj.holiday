@@ -1,9 +1,9 @@
-import Link from "next/link";
-import ReactMarkdown from "react-markdown/with-html";
-import ReactJkMusicPlayer from "../player";
 //import 'react-jinke-music-player/assets/index.css'
-import { Layout, Image, SEO, Bio, PlaylistDisplay } from "@components/common";
-import { getPostBySlug, getPostsSlugs } from "@utils/mixes";
+import { Bio, Image, Layout, PlaylistDisplay, SEO } from '@components/common';
+import { getPostBySlug, getPostsSlugs } from '@utils/mixes';
+import Link from 'next/link';
+import ReactMarkdown from 'react-markdown/with-html';
+import ReactJkMusicPlayer from '../player';
 
 export default function Post({ post, frontmatter, nextPost, previousPost }) {
   const options = {
@@ -17,7 +17,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
     // playIndex: 0,
 
     // color of the music player theme    [ type: 'light' | 'dark' | 'auto'  default `dark` ]
-    theme: "auto",
+    theme: 'auto',
 
     // Specifies movement boundaries. Accepted values:
     // - `parent` restricts movement within the node's offsetParent
@@ -27,7 +27,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
     //   These indicate how far in each direction the draggable
     //   can be moved.
     // Ref: https://github.com/STRML/react-draggable#draggable-api
-    bounds: "parent",
+    bounds: 'parent',
 
     /**
      * Don't interrupt current playing state when audio list updated
@@ -76,7 +76,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
     // defaultPlayMode: "orderLoop",
 
     // audio mode        mini | full          [type `String`  default `mini`]
-    mode: "full",
+    mode: 'full',
 
     /**
      * [ type `Boolean` default 'false' ]
@@ -149,15 +149,12 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
      * https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries
      * [type `String` default '(max-width: 768px) and (orientation : portrait)']
      */
-    mobileMediaQuery: "(max-width: 1024px)",
+    mobileMediaQuery: '(max-width: 1024px)',
   };
 
   return (
     <Layout>
-      <SEO
-        title={frontmatter.title}
-        description={frontmatter.description || post.excerpt}
-      />
+      <SEO title={frontmatter.title} description={frontmatter.description || post.excerpt} />
 
       <article>
         <header className="mb-8">
@@ -194,16 +191,14 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
 
       <nav className="flex flex-wrap justify-between mb-10">
         {previousPost ? (
-          <Link href={"/mix/[slug]"} as={`/mix/${previousPost.slug}`}>
-            <a className="text-lg font-bold">
-              ← {previousPost.frontmatter.title}
-            </a>
+          <Link href={'/mix/[slug]'} as={`/mix/${previousPost.slug}`}>
+            <a className="text-lg font-bold">← {previousPost.frontmatter.title}</a>
           </Link>
         ) : (
           <div />
         )}
         {nextPost ? (
-          <Link href={"/mix/[slug]"} as={`/mix/${nextPost.slug}`}>
+          <Link href={'/mix/[slug]'} as={`/mix/${nextPost.slug}`}>
             <a className="text-lg font-bold">{nextPost.frontmatter.title} →</a>
           </Link>
         ) : (

@@ -1,6 +1,6 @@
-import fs from "fs";
-import path from "path";
-import { getSortedMixes } from "../utils/mixes.mjs";
+import fs from 'node:fs';
+import path from 'node:path';
+import { getSortedMixes } from '../utils/mixes.mjs';
 
 function generateSiteMap(mixes) {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -22,7 +22,7 @@ function generateSiteMap(mixes) {
        </url>
      `;
        })
-       .join("")}
+       .join('')}
    </urlset>
  `;
 }
@@ -31,15 +31,15 @@ async function generateSitemap() {
   try {
     const mixes = await getSortedMixes();
     const sitemap = generateSiteMap(mixes);
-    const publicPath = path.join(process.cwd(), "public", "sitemap.xml");
+    const publicPath = path.join(process.cwd(), 'public', 'sitemap.xml');
 
-    fs.writeFileSync(publicPath, sitemap, "utf8");
+    fs.writeFileSync(publicPath, sitemap, 'utf8');
 
-    if (process.env.NODE_ENV !== "production") {
-      console.log("✓ Sitemap generated successfully at public/sitemap.xml");
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('✓ Sitemap generated successfully at public/sitemap.xml');
     }
   } catch (err) {
-    console.error("Error generating sitemap:", err);
+    console.error('Error generating sitemap:', err);
     process.exit(1);
   }
 }
