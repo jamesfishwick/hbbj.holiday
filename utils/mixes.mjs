@@ -2,6 +2,9 @@ import matter from "gray-matter";
 import fs from "fs";
 import { Parser } from "m3u8-parser";
 
+// In-memory cache for build-time performance
+let cachedMixes = null;
+
 export function getMixesFolders() {
   // Get all mixes folders located in `content/mixes`
   const postsFolders = fs
@@ -46,6 +49,11 @@ function validatePlaylistData(playlistData) {
 }
 
 export async function getSortedMixes() {
+  // Return cached result if available
+  if (cachedMixes) {
+    return cachedMixes;
+  }
+
   const postFolders = getMixesFolders();
 
   const mixes = postFolders.map(async ({ filename, directory, playlist }) => {
@@ -150,9 +158,14 @@ export async function getSortedMixes() {
 
   const resolvedPosts = await Promise.all(mixes);
 
-  return resolvedPosts.sort((a, b) => {
+  const sortedMixes = resolvedPosts.sort((a, b) => {
     return new Date(b.frontmatter.date) - new Date(a.frontmatter.date);
   });
+
+  // Cache the result for subsequent calls
+  cachedMixes = sortedMixes;
+
+  return sortedMixes;
 }
 
 export function getPostsSlugs() {
