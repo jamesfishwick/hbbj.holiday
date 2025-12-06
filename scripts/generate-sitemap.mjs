@@ -1,8 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const { getSortedMixes } = require("../utils/mixes.js");
+import { getSortedMixes } from "../utils/mixes.mjs";
 
 function generateSiteMap(mixes) {
   return `<?xml version="1.0" encoding="UTF-8"?>
