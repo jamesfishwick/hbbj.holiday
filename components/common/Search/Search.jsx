@@ -1,57 +1,61 @@
-import { useCallback, useRef, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
+import { useCallback, useRef, useState } from 'react';
 
 export default function Search() {
   const router = useRouter();
   const searchRef = useRef(null);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [active, setActive] = useState(false);
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const searchEndpoint = (query) => `/api/search?q=${query}`;
+  const searchEndpoint = useCallback((query) => `/api/search?q=${query}`, []);
 
-  const onChange = useCallback(async (event) => {
-    const query = event.target.value;
-    setQuery(query);
-    setError(null);
-
-    if (query.length) {
-      setIsLoading(true);
-      try {
-        const res = await fetch(searchEndpoint(query));
-        if (!res.ok) throw new Error("Failed to search");
-        const data = await res.json();
-        setResults(data.results);
-      } catch (err) {
-        console.error("Search error:", err);
-        setError("An error occurred while searching");
-        setResults([]);
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
-      setResults([]);
+  const onClick = useCallback((event) => {
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setActive(false);
+      window.removeEventListener('click', onClick);
     }
   }, []);
 
   const onFocus = useCallback(() => {
     setActive(true);
-    window.addEventListener("click", onClick);
-  }, []);
+    window.addEventListener('click', onClick);
+  }, [onClick]);
 
-  const onClick = useCallback((event) => {
-    if (searchRef.current && !searchRef.current.contains(event.target)) {
-      setActive(false);
-      window.removeEventListener("click", onClick);
-    }
-  }, []);
+  const onChange = useCallback(
+    async (event) => {
+      const query = event.target.value;
+      setQuery(query);
+      setError(null);
+
+      if (query.length) {
+        setIsLoading(true);
+        try {
+          const res = await fetch(searchEndpoint(query));
+          if (!res.ok) throw new Error('Failed to search');
+          const data = await res.json();
+          setResults(data.results);
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error('Search error:', err);
+          setError('An error occurred while searching');
+          setResults([]);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setResults([]);
+      }
+    },
+    [searchEndpoint]
+  );
 
   const onResultClick = (id) => {
     router.push(`/mix/${id}`);
     setActive(false);
-    setQuery("");
+    setQuery('');
     setResults([]);
     setError(null);
   };
@@ -91,21 +95,23 @@ export default function Search() {
                        cursor-pointer transition-colors duration-150
                        hover:bg-gray-50 dark:hover:bg-gray-800"
               onClick={() => onResultClick(id)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onResultClick(id);
+                }
+              }}
             >
               <div className="px-4 py-3">
-                <h4 className="font-medium text-gray-900 dark:text-white">
-                  {title}
-                </h4>
+                <h4 className="font-medium text-gray-900 dark:text-white">{title}</h4>
                 {description && (
-                  <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    {description}
-                  </p>
+                  <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{description}</p>
                 )}
                 {matchingTracks && matchingTracks.length > 0 && (
                   <div className="mt-2 pl-3 border-l-2 border-teal dark:border-light-blue">
-                    {matchingTracks.map((track, index) => (
+                    {matchingTracks.map((track) => (
                       <p
-                        key={index}
+                        key={`${track.artist}-${track.name}`}
                         className="text-sm text-gray-600 dark:text-gray-400"
                       >
                         {track.artist} - {track.name}
