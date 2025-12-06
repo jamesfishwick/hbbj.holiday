@@ -1,0 +1,102 @@
+name: Verify Netlify Deployment
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  verify-deployment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Wait for Netlify deployment
+        run: |
+          echo "⏳ Waiting for Netlify to deploy..."
+          sleep 30
+
+      - name: Check deployment status via API
+        id: check-api
+        run: |
+          SITE_ID="894eedac-f1b5-4686-9fc1-702429c02b78"
+
+          # Get latest deploy info
+          response=$(curl -s "https://api.netlify.com/api/v1/sites/${SITE_ID}")
+
+          # Extract deploy state
+          state=$(echo "$response" | jq -r '.published_deploy.state')
+          deploy_time=$(echo "$response" | jq -r '.published_deploy.deploy_time')
+          commit=$(echo "$response" | jq -r '.published_deploy.commit_ref' | cut -c1-7)
+          published_at=$(echo "$response" | jq -r '.published_deploy.published_at')
+
+          echo "Deploy State: $state"
+          echo "Deploy Time: ${deploy_time}s"
+          echo "Commit: $commit"
+          echo "Published: $published_at"
+
+          # Check if state is ready
+          if [ "$state" != "ready" ]; then
+            echo "❌ Deployment not ready. Current state: $state"
+            exit 1
+          fi
+
+          echo "✅ Deployment successful!"
+          echo "state=$state" >> $GITHUB_OUTPUT
+
+      - name: Verify site is accessible
+        run: |
+          echo "🌐 Checking if site is accessible..."
+
+          # Check if site returns 200
+          status=$(curl -s -o /dev/null -w "%{http_code}" https://hbbj.holiday)
+
+          if [ "$status" -eq 200 ]; then
+            echo "✅ Site is accessible (HTTP $status)"
+          else
+            echo "❌ Site returned HTTP $status"
+            exit 1
+          fi
+
+      - name: Verify content
+        run: |
+          echo "📄 Verifying site content..."
+
+          # Check if site contains expected content
+          content=$(curl -s https://hbbj.holiday)
+
+          if echo "$content" | grep -q "Happy Birthday Baby Jesus"; then
+            echo "✅ Site content verified"
+          else
+            echo "❌ Expected content not found"
+            exit 1
+          fi
+
+      - name: Check build performance
+        if: success()
+        run: |
+          echo "📊 Deployment Performance Summary:"
+
+          SITE_ID="894eedac-f1b5-4686-9fc1-702429c02b78"
+          response=$(curl -s "https://api.netlify.com/api/v1/sites/${SITE_ID}")
+
+          deploy_time=$(echo "$response" | jq -r '.published_deploy.deploy_time')
+          created_at=$(echo "$response" | jq -r '.published_deploy.created_at')
+          published_at=$(echo "$response" | jq -r '.published_deploy.published_at')
+
+          echo "Build Time: ${deploy_time}s"
+          echo "Started: $created_at"
+          echo "Published: $published_at"
+
+      - name: Deployment success notification
+        if: success()
+        run: |
+          echo "🎉 Deployment verification completed successfully!"
+          echo "🔗 Site: https://hbbj.holiday"
+
+      - name: Deployment failure notification
+        if: failure()
+        run: |
+          echo "💥 Deployment verification failed!"
+          echo "Check the logs above for details."
+          exit 1

@@ -1,33 +1,22 @@
-# Happy Birthday Baby Jesus
+# Happy Birthday Baby Jesus 🎄
 
-A festive digital archive of Christmas music mixes spanning from 2006 to 2023, curated by Sir Lord Selector (James Fishwick). This site celebrates the eclectic, unexpected, and joyful sounds of the season through carefully crafted playlists that blend genres, eras, and holiday moods.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/894eedac-f1b5-4686-9fc1-702429c02b78/deploy-status)](https://app.netlify.com/sites/epic-goldwasser-5d43ce/deploys)
 
-## About
+Annual Christmas music compilation curated by Sir Lord Selector.
 
-Happy Birthday Baby Jesus (HBBJ) is a labor of love that has been bringing unconventional Christmas cheer since 2006. Each year features a unique mix of tracks that range from soul to punk, jazz to electronic, and everything in between. The collection includes both beloved classics reimagined and obscure holiday gems rescued from the depths of music history.
+## Live Site
 
-## Features
+🔗 **https://hbbj.holiday**
 
-- Responsive design with light/dark mode toggle
-- Full playlist functionality with track listings
-- Archive of mixes from 2006-2023
-- Album artwork for each year's mix
-- Markdown-based content management
-- Built with Next.js for optimal performance
+## Tech Stack
 
-## Technology
-
-This site is built with:
-- Next.js
-- React
-- Tailwind CSS
-- react-jinke-music-player for audio playback
-- Next-optimized-images for image optimization
-- Dark mode support via next-themes
+- **Framework**: Next.js 12.0.7
+- **Styling**: Tailwind CSS 2.2.19
+- **Linting & Formatting**: Biome 2.3.8
+- **Deployment**: Netlify
+- **Node**: 20.18.2
 
 ## Development
-
-To run the site locally:
 
 ```bash
 # Install dependencies
@@ -35,19 +24,25 @@ npm install
 
 # Run development server
 npm run dev
+
+# Build for production
+npm run build
+
+# Export static site
+npm run export
+
+# Lint and format
+npm run lint
+npm run lint:fix
+npm run format
 ```
 
-Then open http://localhost:3000 to view the site.
+## Deployment
 
-## Contributing
-This is a personal project maintained by Sir Lord Selector, but if you notice any issues or have suggestions for improvements, please feel free to open an issue.
+The site automatically deploys to Netlify when changes are pushed to the `master` branch.
 
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+Build command: `node scripts/generate-sitemap.mjs && npm run build && npx next export`
 
-## Credits
-Created and curated by Sir Lord Selector
-Built on the Next.js blog starter template by Jose Felix
-Christmas spirit provided by Baby Jesus
+## Music Compilations
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/two7sclash/hbbj.holiday)
+Each year features a unique playlist of eclectic Christmas and holiday-themed music tracks, available from 2006-2024.
