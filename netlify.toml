@@ -3,3 +3,6 @@
   command = "node scripts/generate-sitemap.mjs && npm run build && npx next export"
 
   environment = { NODE_VERSION = "20.18.2" }
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
