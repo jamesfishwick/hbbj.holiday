@@ -1,6 +1,6 @@
-const fs = require("fs");
-const path = require("path");
-const { getSortedMixes } = require("../utils/mixes");
+import fs from "fs";
+import path from "path";
+import { getSortedMixes } from "../utils/mixes.js";
 
 function generateSiteMap(mixes) {
   return `<?xml version="1.0" encoding="UTF-8"?>
