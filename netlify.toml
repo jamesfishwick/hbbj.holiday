@@ -2,7 +2,7 @@
   publish = "out"
   command = "node scripts/generate-sitemap.mjs && pnpm run build"
 
-  environment = { NODE_VERSION = "20.18.2", NPM_FLAGS = "--legacy-peer-deps" }
+  environment = { NODE_VERSION = "20.18.2", NPM_FLAGS = "--legacy-peer-deps", NETLIFY_NEXT_PLUGIN_SKIP = "true" }
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
