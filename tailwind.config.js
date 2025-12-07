@@ -42,6 +42,15 @@ module.exports = {
       spacing: {
         14: '3.375rem',
       },
+      // Design System: Animation Tokens
+      transitionDuration: {
+        fast: '150ms',
+        normal: '250ms',
+        slow: '400ms',
+      },
+      transitionTimingFunction: {
+        smooth: 'cubic-bezier(0.4, 0, 0.2, 1)', // ease-out equivalent
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {

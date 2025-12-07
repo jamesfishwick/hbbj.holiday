@@ -1,9 +1,6 @@
 .blur {
   -webkit-filter: blur(5px);
   filter: blur(5px);
-  transition:
-    filter 500ms ease-in,
-    -webkit-filter 500ms ease-in;
 }
 
 .blur.lazyloaded {
@@ -163,99 +160,6 @@
   }
 }
 
-article {
-  transition: all 0.3s ease;
-}
-
-article:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-/* Smooth image zoom on hover */
-article img {
-  transition: transform 0.5s ease;
-}
-
-article:hover img {
-  transform: scale(1.03);
-}
-
-/* Enhanced link hover effect */
-a.text-4xl {
-  position: relative;
-  text-decoration: none;
-}
-
-a.text-4xl::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -4px;
-  left: 0;
-  background: currentColor;
-  transition: width 0.3s ease;
-}
-
-a.text-4xl:hover::after {
-  width: 100%;
-}
-
-/* Animated Christmas lights */
-.lightrope li {
-  transition: opacity 0.3s ease;
-}
-
-.lightrope li:hover {
-  opacity: 0.8;
-  animation-duration: 0.3s;
-}
-
-/* Smooth theme toggle */
-.dark-mode-switch {
-  transition: transform 0.2s ease;
-}
-
-.dark-mode-switch:hover {
-  transform: rotate(45deg);
-}
-
-/* Enhance footer animation */
-footer {
-  transition: color 0.3s ease;
-}
-
-footer:hover {
-  color: var(--neon-orange);
-}
-
-/* Add subtle parallax scrolling to images */
-.mb-3 {
-  transform: translateZ(0);
-  transition: transform 0.3s ease-out;
-}
-
-.mb-3:hover {
-  transform: translateZ(20px);
-}
-
-/* Smooth page transitions */
-main {
-  animation: fadeIn 0.5s ease-in;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .page-container {
   max-width: 48rem; /* 768px */
   margin: 0 auto;
@@ -284,11 +188,6 @@ main {
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transition: transform 0.2s ease-in-out;
-}
-
-.mix-cover:hover {
-  transform: translateY(-4px);
 }
 
 /* Mix title */
