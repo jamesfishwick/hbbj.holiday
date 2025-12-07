@@ -245,11 +245,7 @@ export function SEO({
       {/* Analytics - Plausible (privacy-friendly) */}
       {process.env.NODE_ENV === 'production' && (
         <>
-          <script
-            defer
-            data-domain="hbbj.holiday"
-            src="https://plausible.io/js/script.js"
-          />
+          <script defer data-domain="hbbj.holiday" src="https://plausible.io/js/script.js" />
           {/* Google Search Console Verification */}
           <meta name="google-site-verification" content="your-verification-code-here" />
         </>
