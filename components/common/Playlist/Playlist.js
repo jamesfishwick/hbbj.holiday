@@ -37,8 +37,8 @@ export function PlaylistDisplay({ tracks = [] }) {
         {tracks.map((track, index) => (
           <div
             key={`${track.name}-${track.singer || track.artist}-${index}`}
-            className="group flex items-center gap-4 p-3 rounded-md 
-                     hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            className="group flex items-center gap-4 p-3 rounded-md
+                     hover:bg-gray-50 dark:hover:bg-gray-800"
           >
             {/* Track Number */}
             <span className="w-8 text-right font-mono text-sm text-gray-500 dark:text-gray-400">
@@ -49,7 +49,7 @@ export function PlaylistDisplay({ tracks = [] }) {
             <div className="flex-grow">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex-grow">
-                  <h4 className="font-medium text-dark-blue dark:text-cream transition-colors">
+                  <h4 className="font-medium text-dark-blue dark:text-cream">
                     {track.name}
                   </h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">{track.singer}</p>
