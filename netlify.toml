@@ -1,6 +1,6 @@
 [build]
   publish = "out"
-  command = "node scripts/generate-sitemap.mjs && pnpm run build && pnpm run export"
+  command = "corepack enable && corepack prepare pnpm@9.15.4 --activate && node scripts/generate-sitemap.mjs && pnpm run build && pnpm run export"
 
   environment = { NODE_VERSION = "20.18.2", NPM_FLAGS = "--legacy-peer-deps", NETLIFY_NEXT_PLUGIN_SKIP = "true" }
 
