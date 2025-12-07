@@ -61,19 +61,27 @@ export default function Search() {
   };
 
   return (
-    <div className="relative w-full max-w-lg mx-auto" ref={searchRef}>
+    <div className="relative w-full max-w-lg mx-auto" ref={searchRef} role="search">
       <div className="relative">
+        <label htmlFor="search-input" className="sr-only">
+          Search mixes and tracks
+        </label>
         <input
-          className="w-full px-4 py-2 text-gray-900 bg-white border border-gray-300 rounded-lg 
+          id="search-input"
+          className="w-full px-4 py-2 text-gray-900 bg-white border border-gray-300 rounded-lg
                    focus:outline-none focus:border-teal focus:ring-2 focus:ring-teal
-                   dark:bg-dark-blue dark:text-white dark:border-gray-600 
+                   dark:bg-dark-blue dark:text-white dark:border-gray-600
                    dark:focus:border-light-blue dark:focus:ring-light-blue
                    placeholder-gray-500 dark:placeholder-gray-400"
           onChange={onChange}
           onFocus={onFocus}
           placeholder="Search mixes and tracks..."
-          type="text"
+          type="search"
           value={query}
+          aria-label="Search mixes and tracks"
+          aria-autocomplete="list"
+          aria-controls={active && results.length > 0 ? 'search-results' : undefined}
+          aria-expanded={active && results.length > 0}
         />
 
         {isLoading && (
@@ -85,12 +93,15 @@ export default function Search() {
 
       {active && !error && results.length > 0 && (
         <ul
-          className="absolute w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg 
+          id="search-results"
+          role="listbox"
+          className="absolute w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg
                      dark:bg-dark-blue dark:border-gray-600 overflow-hidden z-50"
         >
           {results.map(({ id, title, description, matchingTracks }) => (
             <li
               key={id}
+              role="option"
               className="border-b last:border-b-0 border-gray-200 dark:border-gray-600
                        cursor-pointer transition-colors duration-150
                        hover:bg-gray-50 dark:hover:bg-gray-800"
@@ -101,6 +112,7 @@ export default function Search() {
                   onResultClick(id);
                 }
               }}
+              tabIndex={0}
             >
               <div className="px-4 py-3">
                 <h4 className="font-medium text-gray-900 dark:text-white">{title}</h4>
