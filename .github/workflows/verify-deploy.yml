@@ -11,38 +11,79 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - name: Wait for Netlify deployment
+      - name: Get commit info
+        id: commit
         run: |
-          echo "⏳ Waiting for Netlify to deploy..."
-          sleep 30
+          echo "sha=${{ github.sha }}" >> $GITHUB_OUTPUT
+          echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
+          echo "📝 Commit: $(echo ${{ github.sha }} | cut -c1-7)"
 
-      - name: Check deployment status via API
-        id: check-api
+      - name: Wait for Netlify to receive webhook
+        run: |
+          echo "⏳ Waiting for Netlify to start deployment..."
+          sleep 15
+
+      - name: Poll deployment status
+        id: poll
+        timeout-minutes: 8
         run: |
           SITE_ID="894eedac-f1b5-4686-9fc1-702429c02b78"
+          COMMIT_SHA="${{ steps.commit.outputs.short_sha }}"
 
-          # Get latest deploy info
-          response=$(curl -s "https://api.netlify.com/api/v1/sites/${SITE_ID}")
+          echo "🔍 Looking for deployment of commit: $COMMIT_SHA"
 
-          # Extract deploy state
-          state=$(echo "$response" | jq -r '.published_deploy.state')
-          deploy_time=$(echo "$response" | jq -r '.published_deploy.deploy_time')
-          commit=$(echo "$response" | jq -r '.published_deploy.commit_ref' | cut -c1-7)
-          published_at=$(echo "$response" | jq -r '.published_deploy.published_at')
+          # Poll every 15 seconds for up to 8 minutes (32 attempts)
+          for i in {1..32}; do
+            # Get all recent deploys
+            deploys=$(curl -s "https://api.netlify.com/api/v1/sites/${SITE_ID}/deploys")
 
-          echo "Deploy State: $state"
-          echo "Deploy Time: ${deploy_time}s"
-          echo "Commit: $commit"
-          echo "Published: $published_at"
+            # Find deploy matching our commit
+            deploy_state=$(echo "$deploys" | jq -r --arg commit "$COMMIT_SHA" \
+              '.[] | select(.commit_ref | startswith($commit)) | .state' | head -1)
 
-          # Check if state is ready
-          if [ "$state" != "ready" ]; then
-            echo "❌ Deployment not ready. Current state: $state"
-            exit 1
-          fi
+            deploy_id=$(echo "$deploys" | jq -r --arg commit "$COMMIT_SHA" \
+              '.[] | select(.commit_ref | startswith($commit)) | .id' | head -1)
 
-          echo "✅ Deployment successful!"
-          echo "state=$state" >> $GITHUB_OUTPUT
+            if [ -z "$deploy_state" ]; then
+              echo "⏳ Deployment not found yet (attempt $i/32)"
+              sleep 15
+              continue
+            fi
+
+            echo "📊 Deploy ID: $deploy_id"
+            echo "📊 Deploy State: $deploy_state (attempt $i/32)"
+
+            case "$deploy_state" in
+              "ready")
+                echo "✅ Deployment successful!"
+                echo "deploy_id=$deploy_id" >> $GITHUB_OUTPUT
+                echo "state=ready" >> $GITHUB_OUTPUT
+                exit 0
+                ;;
+              "error"|"failed")
+                echo "❌ Deployment failed with state: $deploy_state"
+                echo "deploy_id=$deploy_id" >> $GITHUB_OUTPUT
+                echo "state=$deploy_state" >> $GITHUB_OUTPUT
+
+                # Get error details
+                deploy_details=$(curl -s "https://api.netlify.com/api/v1/deploys/${deploy_id}")
+                error_msg=$(echo "$deploy_details" | jq -r '.error_message // "No error message available"')
+                echo "Error: $error_msg"
+                exit 1
+                ;;
+              "building"|"processing"|"enqueued"|"new")
+                echo "⏳ Deploy in progress: $deploy_state"
+                sleep 15
+                ;;
+              *)
+                echo "⚠️  Unknown state: $deploy_state"
+                sleep 15
+                ;;
+            esac
+          done
+
+          echo "❌ Timeout: Deployment did not complete within 8 minutes"
+          exit 1
 
       - name: Verify site is accessible
         run: |
@@ -78,11 +119,13 @@ jobs:
           echo "📊 Deployment Performance Summary:"
 
           SITE_ID="894eedac-f1b5-4686-9fc1-702429c02b78"
-          response=$(curl -s "https://api.netlify.com/api/v1/sites/${SITE_ID}")
+          DEPLOY_ID="${{ steps.poll.outputs.deploy_id }}"
 
-          deploy_time=$(echo "$response" | jq -r '.published_deploy.deploy_time')
-          created_at=$(echo "$response" | jq -r '.published_deploy.created_at')
-          published_at=$(echo "$response" | jq -r '.published_deploy.published_at')
+          deploy_details=$(curl -s "https://api.netlify.com/api/v1/deploys/${DEPLOY_ID}")
+
+          deploy_time=$(echo "$deploy_details" | jq -r '.deploy_time')
+          created_at=$(echo "$deploy_details" | jq -r '.created_at')
+          published_at=$(echo "$deploy_details" | jq -r '.published_at')
 
           echo "Build Time: ${deploy_time}s"
           echo "Started: $created_at"
@@ -93,10 +136,17 @@ jobs:
         run: |
           echo "🎉 Deployment verification completed successfully!"
           echo "🔗 Site: https://hbbj.holiday"
+          echo "📝 Commit: ${{ steps.commit.outputs.short_sha }}"
+          echo "🆔 Deploy ID: ${{ steps.poll.outputs.deploy_id }}"
 
       - name: Deployment failure notification
         if: failure()
         run: |
           echo "💥 Deployment verification failed!"
+          echo "📝 Commit: ${{ steps.commit.outputs.short_sha }}"
+          if [ -n "${{ steps.poll.outputs.deploy_id }}" ]; then
+            echo "🆔 Deploy ID: ${{ steps.poll.outputs.deploy_id }}"
+            echo "🔗 Netlify logs: https://app.netlify.com/sites/hbbj-holiday/deploys/${{ steps.poll.outputs.deploy_id }}"
+          fi
           echo "Check the logs above for details."
           exit 1
