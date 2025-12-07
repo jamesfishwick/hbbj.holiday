@@ -6,7 +6,7 @@ const imageOptimizationConfig = {
   responsive: {
     adapter: require('responsive-loader/sharp'),
   },
-  optimizeImages: true,
+  optimizeImages: false, // Disabled for Netlify build compatibility
 };
 
 module.exports = withOptimizedImages({

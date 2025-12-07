@@ -154,7 +154,16 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
 
   return (
     <Layout>
-      <SEO title={frontmatter.title} description={frontmatter.description || post.excerpt} />
+      <SEO
+        title={frontmatter.title}
+        description={frontmatter.description || post.excerpt}
+        article={true}
+        publishedDate={frontmatter.date}
+        modifiedDate={frontmatter.date}
+        slug={post.slug}
+        image={`/${frontmatter.title}/${frontmatter.title}.jpg`}
+        playlist={post.playlist}
+      />
 
       <article>
         <header className="mb-8">

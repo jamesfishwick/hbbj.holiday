@@ -1,15 +1,18 @@
 {
   "siteMetadata": {
-    "title": "Happy Birthday Baby Jesus",
+    "title": "Happy Birthday Baby Jesus | Best Christmas Music Playlists Since 2006",
     "author": {
       "name": "Sir Lord Selector",
-      "summary": "Under Christmas Manners"
+      "summary": "Curator of the finest Christmas music playlists since 2006"
     },
-    "description": "A Xmas music blog",
-    "siteUrl": "https://hbbj.com/",
+    "description": "Discover curated Christmas music playlists crafted annually since 2006. Stream the best holiday songs, classic carols, indie Christmas hits, and hidden festive gems. Your go-to destination for premium seasonal soundtracks and joyful holiday vibes.",
+    "keywords": "Christmas music playlists, best Christmas songs, holiday music mix, Christmas carols, festive playlists, Xmas music blog, indie Christmas music, classic holiday songs, curated Christmas playlists, seasonal music, Christmas music 2024, holiday hits, Christmas jazz, vintage Christmas music, modern Christmas songs",
+    "siteUrl": "https://hbbj.holiday",
     "language": "en-US",
+    "image": "/2024/2024.jpg",
     "social": {
-      "instagram": "sirelordselector"
+      "instagram": "sirelordselector",
+      "twitter": "sirelordselector"
     }
   }
 }
