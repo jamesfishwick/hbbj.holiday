@@ -31,17 +31,17 @@ module.exports = {
         // Semantic color roles for design system
         primary: {
           DEFAULT: '#1F2B5D', // dark-blue - main brand color
-          light: '#B2DCF4',   // light-blue - headings, emphasis
+          light: '#B2DCF4', // light-blue - headings, emphasis
         },
         accent: {
           DEFAULT: '#29AFBB', // teal - interactive elements, CTAs
-          hover: '#238995',   // darker teal for hover states
+          hover: '#238995', // darker teal for hover states
         },
         surface: {
           DEFAULT: '#F8FFF6', // cream - cards, containers
-          dark: '#1F2B5D',    // dark-blue - dark mode surfaces
+          dark: '#1F2B5D', // dark-blue - dark mode surfaces
         },
-        danger: '#D70023',    // dark-red - errors, alerts
+        danger: '#D70023', // dark-red - errors, alerts
 
         // Legacy color names (for backward compatibility)
         'dark-blue': '#1F2B5D',
@@ -55,10 +55,10 @@ module.exports = {
       },
       spacing: {
         // 8px base spacing scale for consistency
-        14: '3.5rem',  // 56px (7 * 8px)
-        18: '4.5rem',  // 72px (9 * 8px)
-        22: '5.5rem',  // 88px (11 * 8px)
-        26: '6.5rem',  // 104px (13 * 8px)
+        14: '3.5rem', // 56px (7 * 8px)
+        18: '4.5rem', // 72px (9 * 8px)
+        22: '5.5rem', // 88px (11 * 8px)
+        26: '6.5rem', // 104px (13 * 8px)
       },
       // Design System: Animation Tokens
       transitionDuration: {
