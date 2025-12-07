@@ -46,3 +46,14 @@ Build command: `node scripts/generate-sitemap.mjs && npm run build && npx next e
 ## Music Compilations
 
 Each year features a unique playlist of eclectic Christmas and holiday-themed music tracks, available from 2006-2024.
+
+## Spotify Integration
+
+The site includes searchable Spotify playlists for select years. To set up:
+
+1. Get Spotify API credentials from https://developer.spotify.com/dashboard
+2. Create `.env` file (see `.env.example`)
+3. Run `npm run test-spotify` to verify credentials
+4. Run `npm run fetch-spotify` to generate tracklists
+
+See `NEXT_STEPS.md` for detailed setup instructions.

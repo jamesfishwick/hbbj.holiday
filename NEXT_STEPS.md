@@ -1,95 +1,62 @@
-# Next Steps: Making Spotify Playlists Searchable
+# Spotify Playlist Integration - Complete ✅
 
-## ✅ What's Ready
+## ✅ What's Done
 
-- ✅ Spotify playlist fetcher script created
-- ✅ Credential test script created
-- ✅ npm scripts configured: `fetch-spotify`, `test-spotify`
-- ✅ .env template created
-- ✅ Search functionality already supports playlist data
-- ✅ All committed to `feature/spotify-playlists` branch
+- ✅ 2024 tracklist (26 tracks) added to frontmatter
+- ✅ 2022 tracklist (24 tracks) added to frontmatter
+- ✅ Web scraping method implemented (no API credentials needed!)
+- ✅ Search functionality supports frontmatter tracklists
+- ✅ Ready to merge to master
 
-## 🎯 What You Need to Do Next
+## 🎉 How It Works
 
-### 1. Get Spotify API Credentials (5 minutes)
+The site uses frontmatter tracklists in markdown files instead of m3u8 files. The `utils/mixes.mjs` file (lines 100-107) automatically reads the `tracklist` field from frontmatter and makes it searchable.
 
-1. **Visit:** https://developer.spotify.com/dashboard
-2. **Log in** with your Spotify account
-3. **Click "Create app"**
-4. **Fill in:**
-   - App name: `HBBJ Holiday Playlist Fetcher`
-   - App description: `Fetch playlist data for website search`
-   - Redirect URI: `http://localhost` (required but not used)
-   - API: Select "Web API"
-5. **Click Settings** to view your **Client ID** and **Client Secret**
+### Tracklist Format in Frontmatter
 
-### 2. Add Credentials to .env
-
-Edit `/Users/jamesfishwick/Workspace/hbbj.holiday-spotify/.env`:
-
-```env
-SPOTIFY_CLIENT_ID=paste_your_client_id_here
-SPOTIFY_CLIENT_SECRET=paste_your_client_secret_here
+```yaml
+---
+title: 2024
+description: Your description here
+date: 2024-12-16T11:00:00.000Z
+tracklist:
+  - name: "Santa's Beard"
+    artist: "They Might Be Giants"
+  - name: "Ms. Claus"
+    artist: "The Grapes & Friends"
+  # ... more tracks
+---
 ```
 
-### 3. Test Your Credentials
+### How Search Works
 
-```bash
-cd /Users/jamesfishwick/Workspace/hbbj.holiday-spotify
-npm run test-spotify
-```
+1. `utils/mixes.mjs` reads all markdown files
+2. Extracts tracklist from frontmatter (or m3u8 if available)
+3. `pages/api/search.js` searches track names and artists
+4. Returns matching years with preview of matching tracks
 
-You should see:
-```
-✅ Successfully authenticated with Spotify!
-✅ Successfully accessed playlist: "..."
-🎉 All tests passed! You can now run: npm run fetch-spotify
-```
+## 🔄 Adding Future Year Playlists
 
-### 4. Generate the m3u8 Files
+To add tracklists for future years, you can either:
 
-```bash
-npm run fetch-spotify
-```
+### Method 1: Use Web Scraping (Recommended - No API Needed!)
 
-This will create:
-- `content/mixes/2022/2022.m3u8` (with all tracks from 2022 Spotify playlist)
-- `content/mixes/2024/2024.m3u8` (with all tracks from 2024 Spotify playlist)
+Used Playwright MCP to scrape the Spotify web player and extract tracklists directly. No API credentials required!
 
-### 5. Verify Search Works
+1. Ask Claude Code to navigate to the Spotify playlist URL
+2. Extract track names and artists from the page
+3. Copy the formatted YAML into the year's markdown frontmatter
 
-```bash
-npm run dev
-```
+### Method 2: Use Spotify API (If You Have Credentials)
 
-Then search for a song or artist you know is in the 2022 or 2024 playlists.
-You should see those years appear in search results!
+1. Get credentials from https://developer.spotify.com/dashboard
+2. Add to `.env` file
+3. Run `node scripts/fetch-spotify-to-yaml.js`
+4. Copy output into markdown frontmatter
 
-## 🎵 Current Playlist Configuration
+## 📋 Current Playlists
 
-- **2022:** Playlist ID `6jkANRACBJJ0esLdmtQY7T`
-- **2024:** Playlist ID `7rKQy31YXcLRYtqakWiAqp`
+- **2022:** 24 tracks from playlist `6jkANRACBJJ0esLdmtQY7T`
+- **2024:** 26 tracks from playlist `7rKQy31YXcLRYtqakWiAqp`
 
-## 📚 Reference
-
-- **Detailed setup:** `scripts/README.md`
-- **Full guide:** `claudedocs/spotify-playlist-setup.md`
-- **Test script:** `scripts/test-spotify-credentials.js`
-- **Fetch script:** `scripts/fetch-spotify-playlists.js`
-
-## 💡 Optional: Install dotenv
-
-If you want .env file support (optional - scripts work without it):
-
-```bash
-npm install dotenv
-```
-
-The scripts will automatically use .env if dotenv is installed, or you can
-set environment variables directly when running the scripts.
-
-## ⚠️ Note
-
-- `.env` is gitignored - your credentials stay private
-- `.env.example` is the template (safe to commit)
-- The generated m3u8 files should be committed so search works in production
+Both are fully searchable via the site's search functionality!
