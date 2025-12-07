@@ -15,8 +15,7 @@
     "test-spotify": "node scripts/test-spotify-credentials.js",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
-    "format": "biome format --write .",
-    "postinstall": "pnpm rebuild mozjpeg --build-from-source && pnpm rebuild optipng-bin --build-from-source && pnpm rebuild pngquant-bin --build-from-source"
+    "format": "biome format --write ."
   },
   "dependencies": {
     "@svgr/webpack": "^6.1.1",
