@@ -58,7 +58,7 @@ export function Layout({ children }) {
         <main className="mt-12">{children}</main>
         <footer className="site-footer text-lg font-light">
           © {new Date().getFullYear()}, Built with{' '}
-          <a href="https://nextjs.org/" className="text-dark-red hover:underline">
+          <a href="https://nextjs.org/" className="text-dark-red hover:opacity-80">
             Next.js
           </a>
         </footer>
@@ -95,7 +95,7 @@ const Header = () => {
 const LargeTitle = ({ title }) => (
   <h1>
     <Link href="/">
-      <a className="text-4xl sm:text-5xl font-black leading-tight no-underline font-display text-light-blue hover:text-red-400">
+      <a className="text-4xl sm:text-5xl font-black leading-tight no-underline font-display text-light-blue hover:opacity-80">
         {title}
       </a>
     </Link>
@@ -105,7 +105,7 @@ const LargeTitle = ({ title }) => (
 const SmallTitle = ({ title }) => (
   <h1>
     <Link href="/">
-      <a className="text-2xl font-black no-underline font-display text-light-blue hover:text-red-400">
+      <a className="text-2xl font-black no-underline font-display text-light-blue hover:opacity-80">
         {title}
       </a>
     </Link>
