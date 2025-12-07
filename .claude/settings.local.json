@@ -23,7 +23,8 @@
       "Read(//Users/jamesfishwick/Workspace/solutions-architect-challenge/src/services/**)",
       "Read(//Users/jamesfishwick/Workspace/solutions-architect-challenge/src/api/controllers/**)",
       "Read(//Users/jamesfishwick/Desktop/**)",
-      "SlashCommand(/sc:analyze --focus quality,performance,security --depth deep)"
+      "SlashCommand(/sc:analyze --focus quality,performance,security --depth deep)",
+      "mcp__playwright__browser_console_messages"
     ],
     "deny": [],
     "ask": []
