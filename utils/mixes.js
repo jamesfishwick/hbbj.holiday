@@ -1,11 +1,11 @@
-import fs from 'node:fs';
-import matter from 'gray-matter';
-import { Parser } from 'm3u8-parser';
+const fs = require('node:fs');
+const matter = require('gray-matter');
+const { Parser } = require('m3u8-parser');
 
 // In-memory cache for build-time performance
 let cachedMixes = null;
 
-export function getMixesFolders() {
+function getMixesFolders() {
   // Get all mixes folders located in `content/mixes`
   const postsFolders = fs.readdirSync(`${process.cwd()}/content/mixes`).map((folderName) => ({
     directory: folderName,
@@ -46,7 +46,7 @@ function validatePlaylistData(playlistData) {
   }
 }
 
-export async function getSortedMixes() {
+async function getSortedMixes() {
   // Return cached result if available
   if (cachedMixes) {
     return cachedMixes;
@@ -164,7 +164,7 @@ export async function getSortedMixes() {
   return sortedMixes;
 }
 
-export function getPostsSlugs() {
+function getPostsSlugs() {
   const postFolders = getMixesFolders();
 
   const paths = postFolders.map(({ filename }) => ({
@@ -176,7 +176,7 @@ export function getPostsSlugs() {
   return paths;
 }
 
-export async function getPostBySlug(slug) {
+async function getPostBySlug(slug) {
   const mixes = await getSortedMixes();
   const postIndex = mixes.findIndex(({ slug: postSlug }) => postSlug === slug);
   const { frontmatter, content, excerpt, playlist, error } = mixes[postIndex];
@@ -196,3 +196,10 @@ export async function getPostBySlug(slug) {
     nextPost,
   };
 }
+
+module.exports = {
+  getMixesFolders,
+  getSortedMixes,
+  getPostsSlugs,
+  getPostBySlug,
+};

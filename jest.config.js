@@ -14,6 +14,8 @@ const customJestConfig = {
     '^@utils/(.*)$': '<rootDir>/utils/$1',
     '^@config/(.*)$': '<rootDir>/config/$1',
   },
+  transformIgnorePatterns: ['/node_modules/', '^.+\\.module\\.(css|sass|scss)$'],
+  moduleFileExtensions: ['js', 'mjs', 'jsx', 'json', 'node'],
   testMatch: [
     '<rootDir>/tests/**/*.test.js',
     '<rootDir>/tests/**/*.test.jsx',
@@ -21,7 +23,7 @@ const customJestConfig = {
     '<rootDir>/tests/**/*.test.tsx',
   ],
   collectCoverageFrom: [
-    'utils/**/*.js',
+    'utils/**/*.{js,mjs}',
     'pages/api/**/*.js',
     'components/**/*.{js,jsx}',
     '!**/*.d.ts',

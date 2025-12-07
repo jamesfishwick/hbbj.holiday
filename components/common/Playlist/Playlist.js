@@ -1,4 +1,8 @@
-export function PlaylistDisplay({ tracks }) {
+export function PlaylistDisplay({ tracks = [] }) {
+  if (!tracks || !Array.isArray(tracks) || tracks.length === 0) {
+    return null;
+  }
+
   return (
     <div className="bg-white dark:bg-dark-blue rounded-lg shadow-lg p-6 my-8">
       {/* Playlist Header */}
