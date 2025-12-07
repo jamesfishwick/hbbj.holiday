@@ -1,17 +1,1 @@
-export const posts = [
-  { fileName: '2006' },
-  { fileName: '2007' },
-  { fileName: '2008' },
-  { fileName: '2009' },
-  { fileName: '2010' },
-  { fileName: '2011' },
-  { fileName: '2012' },
-  { fileName: '2013' },
-  { fileName: '2014' },
-  { fileName: '2015' },
-  { fileName: '2018' },
-  { fileName: '2019' },
-  { fileName: '2020' },
-  { fileName: '2021' },
-  { fileName: '2023' },
-];
+export const posts = [{"fileName":"2006"},{"fileName":"2007"},{"fileName":"2008"},{"fileName":"2009"},{"fileName":"2010"},{"fileName":"2011"},{"fileName":"2012"},{"fileName":"2013"},{"fileName":"2014"},{"fileName":"2015"},{"fileName":"2018"},{"fileName":"2019"},{"fileName":"2020"},{"fileName":"2021"},{"fileName":"2023"}]
