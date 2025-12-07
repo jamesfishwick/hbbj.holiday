@@ -79,6 +79,14 @@
     "blog",
     "template"
   ],
+  "resolutions": {
+    "sharp": "^0.33.5"
+  },
+  "pnpm": {
+    "overrides": {
+      "sharp": "^0.33.5"
+    }
+  },
   "volta": {
     "node": "20.18.2"
   },
