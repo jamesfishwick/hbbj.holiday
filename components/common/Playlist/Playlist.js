@@ -49,9 +49,7 @@ export function PlaylistDisplay({ tracks = [] }) {
             <div className="flex-grow">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex-grow">
-                  <h4 className="font-medium text-dark-blue dark:text-cream transition-colors">
-                    {track.name}
-                  </h4>
+                  <h4 className="font-medium text-dark-blue dark:text-cream">{track.name}</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">{track.singer}</p>
                 </div>
               </div>

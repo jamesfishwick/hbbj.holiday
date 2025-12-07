@@ -13,31 +13,23 @@ export default function Home({ mixes }) {
       {mixes.map(({ frontmatter: { title, description }, slug }) => (
         <article
           key={slug}
-          className="mb-8 p-6 rounded-lg border border-light-blue border-opacity-20
-                     transition-all duration-300
-                     hover:scale-[1.02] hover:shadow-xl hover:border-opacity-40"
+          className="mb-8 rounded-lg overflow-hidden border border-light-blue border-opacity-20 hover:border-opacity-40 hover:bg-dark-blue hover:bg-opacity-30"
         >
-          <header className="mb-2">
-            <h3 className="mb-2">
-              <Link href={'/mix/[slug]'} as={`/mix/${slug}`}>
-                <a className="text-4xl font-bold font-display text-light-blue">
-                  <Image
-                    alt={`Happy Birthday Baby Jesus ${title} Christmas Music Playlist - Curated Holiday Songs`}
-                    src={require(`../content/assets/${title}.jpg`)}
-                    webpSrc={require(`../content/assets/${title}.jpg?webp`)}
-                    previewSrc={require(`../content/assets/${title}.jpg?lqip`)}
-                    className="w-full mb-3 transition-transform duration-300 hover:scale-105"
-                  />
-                  {title}
-                </a>
-              </Link>
-            </h3>
-            {/* <span className="text-sm">{date}</span> */}
-          </header>
-          <section>
-            <p className="mb-8 text-lg">{description}</p>
-          </section>
-          <hr />
+          <Link href={'/mix/[slug]'} as={`/mix/${slug}`}>
+            <a className="block">
+              <Image
+                alt={`Happy Birthday Baby Jesus ${title} Christmas Music Playlist - Curated Holiday Songs`}
+                src={require(`../content/assets/${title}.jpg`)}
+                webpSrc={require(`../content/assets/${title}.jpg?webp`)}
+                previewSrc={require(`../content/assets/${title}.jpg?lqip`)}
+                className="w-full"
+              />
+              <div className="p-6">
+                <h3 className="text-4xl font-bold font-display text-light-blue mb-3">{title}</h3>
+                <p className="text-lg text-cream text-opacity-90 leading-relaxed">{description}</p>
+              </div>
+            </a>
+          </Link>
         </article>
       ))}
     </Layout>
