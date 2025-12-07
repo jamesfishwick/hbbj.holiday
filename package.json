@@ -65,7 +65,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run cache-posts && git add cache/data.js"
+      "pre-commit": "pnpm run cache-posts && git add cache/data.js"
     }
   },
   "license": "MIT",
