@@ -122,6 +122,54 @@ export function SEO({
           },
         ],
       });
+    } else {
+      // Add FAQ schema for homepage
+      baseSchema['@graph'].push({
+        '@type': 'FAQPage',
+        '@id': `${siteMetadata.siteUrl}/#faq`,
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'What is Happy Birthday Baby Jesus?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Happy Birthday Baby Jesus is a curated collection of Christmas music playlists created annually since 2006 by Sir Lord Selector. Each year features a carefully selected mix of classic carols, modern hits, and hidden gems for the holiday season.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'How often are new Christmas playlists released?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'A new Christmas music playlist is released annually in December, just in time for the holiday season. Each mix represents a fresh selection of festive music curated for that year.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Can I listen to the playlists on Spotify?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Yes! Most of our Christmas music playlists are available on Spotify. You can find embedded Spotify players on each mix page, making it easy to stream the complete holiday playlist directly.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What genres of Christmas music are featured?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Our Christmas playlists feature a diverse range of genres including traditional carols, indie Christmas songs, jazz interpretations, modern pop covers, classic holiday hits, and carefully selected hidden gems from various decades.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Are the Christmas playlists free to listen to?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Yes, all Christmas music playlists on Happy Birthday Baby Jesus are completely free to access and stream through Spotify or download where audio files are available.',
+            },
+          },
+        ],
+      });
     }
 
     return baseSchema;
@@ -193,6 +241,19 @@ export function SEO({
         rel="stylesheet"
         href="https://unpkg.com/react-jinke-music-player@4.18.1/assets/index.css"
       />
+
+      {/* Analytics - Plausible (privacy-friendly) */}
+      {process.env.NODE_ENV === 'production' && (
+        <>
+          <script
+            defer
+            data-domain="hbbj.holiday"
+            src="https://plausible.io/js/script.js"
+          />
+          {/* Google Search Console Verification */}
+          <meta name="google-site-verification" content="your-verification-code-here" />
+        </>
+      )}
     </Head>
   );
 }
