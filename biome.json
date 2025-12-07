@@ -35,7 +35,10 @@
       "a11y": {
         "recommended": true,
         "useValidAnchor": "off",
-        "noSvgWithoutTitle": "warn"
+        "noSvgWithoutTitle": "warn",
+        "useSemanticElements": "warn",
+        "useAriaPropsSupportedByRole": "warn",
+        "noNoninteractiveElementToInteractiveRole": "warn"
       },
       "complexity": {
         "recommended": true
