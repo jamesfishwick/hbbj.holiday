@@ -77,19 +77,17 @@ export async function getSortedMixes() {
 
     try {
       if (fs.existsSync(playlistPath)) {
-        // Add raw content logging
         const rawContent = fs.readFileSync(playlistPath, 'utf8');
 
         // Validate the data
         validatePlaylistData(rawContent);
 
-        // Now try parsing
         const parser = new Parser();
         parser.push(rawContent);
         parser.end();
 
         if (parser.manifest.segments.length === 0) {
-          console.error(`No segments found in ${directory} playlist. Full content:\n${rawContent}`);
+          console.error(`No segments found in ${directory} playlist`);
           throw new Error('Playlist is empty or incorrectly formatted');
         }
 
