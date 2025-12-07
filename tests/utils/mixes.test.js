@@ -39,6 +39,7 @@ const {
   getSortedMixes,
   getPostsSlugs,
   getPostBySlug,
+  clearCache,
 } = require('../../utils/mixes');
 
 describe('getMixesFolders', () => {
@@ -75,6 +76,7 @@ describe('getMixesFolders', () => {
 
 describe('getSortedMixes', () => {
   beforeEach(() => {
+    clearCache(); // Clear the cached mixes between tests
     mockReaddirSync.mockClear();
     mockReadFileSync.mockClear();
     mockExistsSync.mockClear();
@@ -148,7 +150,7 @@ describe('getSortedMixes', () => {
         title: 2022,
         description: 'Holiday music mix for 2022',
         date: new Date('2022-12-25'),
-        spotifyTracks: [
+        tracklist: [
           { name: 'Last Christmas', artist: 'Wham!' },
           { name: 'All I Want for Christmas', singer: 'Mariah Carey' },
         ],
@@ -398,6 +400,7 @@ describe('getPostsSlugs', () => {
 
 describe('getPostBySlug', () => {
   beforeEach(() => {
+    clearCache(); // Clear the cached mixes between tests
     mockReaddirSync.mockClear();
     mockReadFileSync.mockClear();
     mockExistsSync.mockClear();

@@ -71,44 +71,13 @@ async function getSortedMixes() {
 
     // Remove .md file extension from post name
     const slug = filename.replace('.md', '');
-    let playlistData;
     let formattedPlaylist = [];
     const playlistPath = `content/mixes/${directory}/${playlist}`;
 
     try {
       if (fs.existsSync(playlistPath)) {
-        //file exists
-        playlistData = fs.readFileSync(playlistPath, 'utf8');
-        validatePlaylistData(playlistData);
-      } else {
-        throw new Error('M3U8 file not found');
-      }
-    } catch (err) {
-      handleError(err);
-      return {
-        slug,
-        frontmatter,
-        excerpt,
-        content,
-        playlist: [],
-        error: err.message,
-      }; // Return empty playlist on error
-    }
-
-    // In utils/mixes.js, update the playlist processing section:
-
-    // In utils/mixes.js - update the file reading section
-
-    try {
-      if (fs.existsSync(playlistPath)) {
         // Add raw content logging
         const rawContent = fs.readFileSync(playlistPath, 'utf8');
-        // console.log(
-        //   `\nRaw content for ${directory} (first 500 chars):\n${rawContent.slice(
-        //     0,
-        //     500
-        //   )}`
-        // );
 
         // Validate the data
         validatePlaylistData(rawContent);
@@ -124,23 +93,22 @@ async function getSortedMixes() {
         }
 
         formattedPlaylist = formatPlaylist(parser.manifest, directory);
-        // console.log(
-        //   `Successfully parsed ${formattedPlaylist.length} tracks from ${directory}`
-        // );
-      } else {
-        throw new Error('M3U8 file not found');
       }
+      // If m3u8 file doesn't exist, formattedPlaylist remains empty array
+      // and fallback logic below will handle it
     } catch (err) {
       handleError(err);
       console.error(`Full error for ${directory}:`, err);
-      return {
-        slug,
-        frontmatter,
-        excerpt,
-        content,
-        playlist: [],
-        error: `Error processing playlist: ${err.message}`,
-      };
+    }
+
+    // If no m3u8 or m3u8 failed, try frontmatter tracklist
+    if (formattedPlaylist.length === 0 && data.tracklist && Array.isArray(data.tracklist)) {
+      formattedPlaylist = data.tracklist.map((track) => ({
+        name: track.name || track.title || 'Unknown',
+        singer: track.artist || track.singer || 'Unknown',
+        musicSrc: '', // No audio file for Spotify-only playlists
+        cover: `/${directory}/${directory}.jpg`,
+      }));
     }
 
     return {
@@ -197,9 +165,14 @@ async function getPostBySlug(slug) {
   };
 }
 
+function clearCache() {
+  cachedMixes = null;
+}
+
 module.exports = {
   getMixesFolders,
   getSortedMixes,
   getPostsSlugs,
   getPostBySlug,
+  clearCache,
 };
