@@ -28,6 +28,9 @@ pnpm-debug.log*
 package-lock.json
 yarn.lock
 
+# claude settings
+.claude/settings.local.json
+
 # local env files
 .env.local
 .env.development.local
