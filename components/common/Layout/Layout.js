@@ -63,7 +63,9 @@ export function Layout({ children }) {
       {/* Main content */}
       <div className="page-container mx-auto px-4 py-12 font-body antialiased">
         <Header />
-        <main id="main-content" className="mt-12">{children}</main>
+        <main id="main-content" className="mt-12">
+          {children}
+        </main>
         <footer className="site-footer text-lg font-light">
           © {new Date().getFullYear()}, Built with{' '}
           <a href="https://nextjs.org/" className="text-dark-red hover:opacity-80">

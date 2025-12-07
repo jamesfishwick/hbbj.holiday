@@ -26,7 +26,10 @@ export default function Home({ mixes }) {
                 className="w-full"
               />
               <div className="p-6">
-                <h3 id={`mix-title-${slug}`} className="text-4xl font-bold font-display text-light-blue mb-3">
+                <h3
+                  id={`mix-title-${slug}`}
+                  className="text-4xl font-bold font-display text-light-blue mb-3"
+                >
                   {title}
                 </h3>
                 <p className="text-lg text-cream text-opacity-90 leading-relaxed">{description}</p>
