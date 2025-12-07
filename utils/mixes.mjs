@@ -1,6 +1,6 @@
-const fs = require('node:fs');
-const matter = require('gray-matter');
-const { Parser } = require('m3u8-parser');
+import fs from 'node:fs';
+import matter from 'gray-matter';
+import { Parser } from 'm3u8-parser';
 
 // In-memory cache for build-time performance
 let cachedMixes = null;
@@ -36,6 +36,7 @@ function formatPlaylist(playlist, directory) {
     };
   });
 }
+
 function handleError(err) {
   console.error(err);
 }
@@ -46,7 +47,7 @@ function validatePlaylistData(playlistData) {
   }
 }
 
-async function getSortedMixes() {
+export async function getSortedMixes() {
   // Return cached result if available
   if (cachedMixes) {
     return cachedMixes;
@@ -132,7 +133,7 @@ async function getSortedMixes() {
   return sortedMixes;
 }
 
-function getPostsSlugs() {
+export function getPostsSlugs() {
   const postFolders = getMixesFolders();
 
   const paths = postFolders.map(({ filename }) => ({
@@ -144,7 +145,7 @@ function getPostsSlugs() {
   return paths;
 }
 
-async function getPostBySlug(slug) {
+export async function getPostBySlug(slug) {
   const mixes = await getSortedMixes();
   const postIndex = mixes.findIndex(({ slug: postSlug }) => postSlug === slug);
   const { frontmatter, content, excerpt, playlist, error } = mixes[postIndex];
@@ -165,14 +166,10 @@ async function getPostBySlug(slug) {
   };
 }
 
-function clearCache() {
+export function clearCache() {
   cachedMixes = null;
 }
 
-module.exports = {
-  getMixesFolders,
-  getSortedMixes,
-  getPostsSlugs,
-  getPostBySlug,
-  clearCache,
-};
+export function getMixesFoldersExport() {
+  return getMixesFolders();
+}
