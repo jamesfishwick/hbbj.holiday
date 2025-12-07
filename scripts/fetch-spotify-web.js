@@ -11,7 +11,7 @@ const PLAYLISTS = [
   { year: '2024', playlistId: '7rKQy31YXcLRYtqakWiAqp' },
 ];
 
-function generateYAML(tracks) {
+function _generateYAML(tracks) {
   let yaml = 'tracklist:\n';
   for (const track of tracks) {
     // Escape quotes and handle special characters

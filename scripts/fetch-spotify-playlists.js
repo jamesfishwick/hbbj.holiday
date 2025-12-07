@@ -19,7 +19,7 @@ const path = require('node:path');
 try {
   const dotenv = require('dotenv');
   dotenv.config();
-} catch (e) {
+} catch (_e) {
   // dotenv not installed, use environment variables directly
 }
 
@@ -46,7 +46,7 @@ async function getSpotifyToken() {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+      Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
     },
     body: 'grant_type=client_credentials',
   });
@@ -69,7 +69,7 @@ async function fetchPlaylistTracks(playlistId, token) {
   while (url) {
     const response = await fetch(url, {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -129,13 +129,7 @@ async function main() {
       console.log(`Found ${tracks.length} tracks`);
 
       const m3u8Content = generateM3U8Content(tracks, year);
-      const outputPath = path.join(
-        process.cwd(),
-        'content',
-        'mixes',
-        year,
-        `${year}.m3u8`
-      );
+      const outputPath = path.join(process.cwd(), 'content', 'mixes', year, `${year}.m3u8`);
 
       fs.writeFileSync(outputPath, m3u8Content, 'utf8');
       console.log(`✓ Generated ${outputPath}`);

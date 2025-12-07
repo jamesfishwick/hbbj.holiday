@@ -1,9 +1,9 @@
-const fs = require('node:fs');
+const _fs = require('node:fs');
 
 // Load .env file if dotenv is available
 try {
   require('dotenv').config();
-} catch (e) {
+} catch (_e) {
   // dotenv not installed, use environment variables directly
 }
 
@@ -48,7 +48,7 @@ async function testCredentials() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
       },
       body: 'grant_type=client_credentials',
     });
@@ -72,7 +72,7 @@ async function testCredentials() {
       'https://api.spotify.com/v1/playlists/6jkANRACBJJ0esLdmtQY7T',
       {
         headers: {
-          'Authorization': `Bearer ${data.access_token}`,
+          Authorization: `Bearer ${data.access_token}`,
         },
       }
     );

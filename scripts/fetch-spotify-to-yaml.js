@@ -1,5 +1,3 @@
-const fs = require('node:fs');
-
 /**
  * Fetch Spotify playlist and output as YAML frontmatter format
  * Run once to get tracklist data, then copy into markdown frontmatter
@@ -11,7 +9,7 @@ const fs = require('node:fs');
 // Load .env file if dotenv is available
 try {
   require('dotenv').config();
-} catch (e) {
+} catch (_e) {
   // dotenv not installed, use environment variables directly
 }
 
@@ -25,16 +23,14 @@ async function getSpotifyToken() {
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
   if (!clientId || !clientSecret) {
-    throw new Error(
-      'Missing Spotify credentials. Set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET'
-    );
+    throw new Error('Missing Spotify credentials. Set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET');
   }
 
   const response = await fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+      Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
     },
     body: 'grant_type=client_credentials',
   });
@@ -54,7 +50,7 @@ async function fetchPlaylistTracks(playlistId, token) {
   while (url) {
     const response = await fetch(url, {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -102,7 +98,7 @@ async function main() {
       console.log(`Found ${tracks.length} tracks\n`);
 
       const yaml = generateYAML(tracks);
-      console.log('Add this to the frontmatter of content/mixes/' + year + '/' + year + '.md:\n');
+      console.log(`Add this to the frontmatter of content/mixes/${year}/${year}.md:\n`);
       console.log(yaml);
       console.log('\n');
     }
