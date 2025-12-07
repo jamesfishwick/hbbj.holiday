@@ -5,7 +5,10 @@ import Link from 'next/link';
 export default function Home({ mixes }) {
   return (
     <Layout>
-      <SEO title="All mixes" />
+      <SEO
+        title="Curated Christmas Music Playlists"
+        description="Explore our complete collection of holiday music mixes from 2006 to 2024. The best Christmas songs, carols, and festive playlists curated by Sir Lord Selector."
+      />
       <Bio className="my-14" />
       {mixes.map(({ frontmatter: { title, description }, slug }) => (
         <article

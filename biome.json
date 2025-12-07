@@ -47,7 +47,8 @@
         "recommended": true
       },
       "security": {
-        "recommended": true
+        "recommended": true,
+        "noDangerouslySetInnerHtml": "off"
       },
       "style": {
         "recommended": true

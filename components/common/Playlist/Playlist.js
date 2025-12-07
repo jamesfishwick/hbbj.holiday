@@ -37,7 +37,7 @@ export function PlaylistDisplay({ tracks = [] }) {
         {tracks.map((track, index) => (
           <div
             key={`${track.name}-${track.singer || track.artist}-${index}`}
-            className="group flex items-center gap-4 p-3 rounded-md 
+            className="group flex items-center gap-4 p-3 rounded-md
                      hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
             {/* Track Number */}

@@ -5,11 +5,14 @@
       "name": "Sir Lord Selector",
       "summary": "Under Christmas Manners"
     },
-    "description": "A Xmas music blog",
-    "siteUrl": "https://hbbj.com/",
+    "description": "Curated Christmas music playlists since 2006. Discover the best holiday music mixes featuring classic carols, modern hits, and hidden gems. Your ultimate destination for seasonal soundtracks and festive vibes.",
+    "keywords": "Christmas music, holiday playlists, Christmas songs, festive music, holiday music mix, Christmas carols, seasonal music, Xmas playlist, holiday hits, Christmas music blog",
+    "siteUrl": "https://hbbj.holiday",
     "language": "en-US",
+    "image": "/2024/2024.jpg",
     "social": {
-      "instagram": "sirelordselector"
+      "instagram": "sirelordselector",
+      "twitter": "sirelordselector"
     }
   }
 }
