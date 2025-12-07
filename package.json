@@ -12,6 +12,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "fetch-spotify": "node scripts/fetch-spotify-playlists.js",
+    "test-spotify": "node scripts/test-spotify-credentials.js",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write ."

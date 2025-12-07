@@ -4,12 +4,24 @@ const path = require('node:path');
 /**
  * Fetches Spotify playlist data and generates m3u8 files
  *
- * Usage: node scripts/fetch-spotify-playlists.js
+ * Usage:
+ *   SPOTIFY_CLIENT_ID=xxx SPOTIFY_CLIENT_SECRET=yyy node scripts/fetch-spotify-playlists.js
+ *
+ * Or set variables in .env and run:
+ *   npm run fetch-spotify
  *
  * Requires environment variables:
  * - SPOTIFY_CLIENT_ID
  * - SPOTIFY_CLIENT_SECRET
  */
+
+// Load .env file if it exists (for local development)
+try {
+  const dotenv = require('dotenv');
+  dotenv.config();
+} catch (e) {
+  // dotenv not installed, use environment variables directly
+}
 
 // Spotify playlist IDs to fetch
 const PLAYLISTS = [
