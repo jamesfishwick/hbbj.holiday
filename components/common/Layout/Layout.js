@@ -95,7 +95,7 @@ const Header = () => {
 const LargeTitle = ({ title }) => (
   <h1>
     <Link href="/">
-      <a className="text-4xl sm:text-5xl font-black leading-tight no-underline font-display text-light-blue hover:text-red-400 transition-colors">
+      <a className="text-4xl sm:text-5xl font-black leading-tight no-underline font-display text-light-blue hover:text-red-400">
         {title}
       </a>
     </Link>
@@ -105,7 +105,7 @@ const LargeTitle = ({ title }) => (
 const SmallTitle = ({ title }) => (
   <h1>
     <Link href="/">
-      <a className="text-2xl font-black no-underline font-display text-light-blue hover:text-red-400 transition-colors">
+      <a className="text-2xl font-black no-underline font-display text-light-blue hover:text-red-400">
         {title}
       </a>
     </Link>

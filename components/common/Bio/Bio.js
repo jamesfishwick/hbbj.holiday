@@ -13,7 +13,7 @@ export function Bio({ className }) {
       )}
     >
       <Image
-        className="flex-shrink-0 mb-0 mr-4 rounded-full w-16 h-16 transition-transform duration-300 hover:scale-110"
+        className="flex-shrink-0 mb-0 mr-4 rounded-full w-16 h-16"
         src={require('../../../content/assets/profile.png')}
         webpSrc={require('../../../content/assets/profile.png?webp')}
         previewSrc={require('../../../content/assets/profile.png?lqip')}
@@ -27,7 +27,7 @@ export function Bio({ className }) {
         <p className="mt-2">
           <a
             href="https://www.instagram.com/sirlordselector/"
-            className="text-teal hover:text-light-blue transition-colors duration-200 inline-flex items-center gap-1"
+            className="text-teal hover:text-light-blue inline-flex items-center gap-1"
           >
             Follow him on Instagram →
           </a>
