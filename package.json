@@ -79,6 +79,9 @@
     "blog",
     "template"
   ],
+  "resolutions": {
+    "sharp": "^0.33.5"
+  },
   "pnpm": {
     "overrides": {
       "sharp": "^0.33.5"
