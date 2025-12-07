@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Search from '../Search/Search';
 export function Layout({ children }) {
   return (
-    <div className="min-h-screen bg-dark-blue">
+    <div className="min-h-screen bg-dark-blue text-cream">
       {/* Christmas lights */}
       <ul className="lightrope">
         <li></li>
