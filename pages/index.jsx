@@ -10,7 +10,7 @@ export default function Home({ mixes }) {
       {mixes.map(({ frontmatter: { title, description }, slug }) => (
         <article
           key={slug}
-          className="mb-8 p-6 rounded-lg border border-light-blue border-opacity-20"
+          className="mb-8 p-6 rounded-lg border border-light-blue border-opacity-20 hover:border-opacity-40"
         >
           <header className="mb-2">
             <h3 className="mb-2">

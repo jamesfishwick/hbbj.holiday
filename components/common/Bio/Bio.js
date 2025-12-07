@@ -27,7 +27,7 @@ export function Bio({ className }) {
         <p className="mt-2">
           <a
             href="https://www.instagram.com/sirlordselector/"
-            className="text-teal hover:text-light-blue inline-flex items-center gap-1"
+            className="text-teal hover:opacity-80 inline-flex items-center gap-1"
           >
             Follow him on Instagram →
           </a>
