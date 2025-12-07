@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { getSortedMixes } from '../utils/mixes.mjs';
+import { getSortedMixes } from '../utils/mixes.js';
 
 function generateSiteMap(mixes) {
   return `<?xml version="1.0" encoding="UTF-8"?>
