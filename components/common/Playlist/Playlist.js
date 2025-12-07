@@ -15,7 +15,10 @@ export function PlaylistDisplay({ tracks = [] }) {
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
+            role="img"
+            aria-label="Music note icon"
           >
+            <title>Music note icon</title>
             <path d="M9 18V5l12-2v13" />
             <circle cx="6" cy="18" r="3" />
             <circle cx="18" cy="16" r="3" />
@@ -33,7 +36,7 @@ export function PlaylistDisplay({ tracks = [] }) {
       <div className="space-y-2">
         {tracks.map((track, index) => (
           <div
-            key={index}
+            key={`${track.name}-${track.singer || track.artist}-${index}`}
             className="group flex items-center gap-4 p-3 rounded-md 
                      hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
