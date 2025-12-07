@@ -1,7 +1,14 @@
 import { beforeEach, describe, expect, jest, test } from '@jest/globals';
-import * as mixes from '@utils/mixes';
-import handler from '../../pages/api/search';
 import { mockMixWithoutPlaylist, mockMixWithPlaylist } from '../fixtures/mock-data';
+
+// Mock the entire mixes module
+const mockGetSortedMixes = jest.fn();
+jest.mock('@utils/mixes', () => ({
+  getSortedMixes: mockGetSortedMixes,
+}));
+
+// Import handler AFTER mocking
+const handler = require('../../pages/api/search').default;
 
 // Helper to create mock request/response objects
 const createMockRequest = (method = 'GET', query = {}) => ({
@@ -19,20 +26,15 @@ const createMockResponse = () => {
 };
 
 describe('Search API Handler', () => {
-  let getSortedMixesSpy;
-
   beforeEach(() => {
-    // Spy on getSortedMixes
-    getSortedMixesSpy = jest.spyOn(mixes, 'getSortedMixes').mockResolvedValue([]);
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
+    // Reset mock before each test
+    mockGetSortedMixes.mockClear();
+    mockGetSortedMixes.mockResolvedValue([]);
   });
 
   test('happy path returns search results matching query in title', async () => {
     const mockMixes = [mockMixWithPlaylist, mockMixWithoutPlaylist];
-    getSortedMixesSpy.mockResolvedValue(mockMixes);
+    mockGetSortedMixes.mockResolvedValue(mockMixes);
 
     const req = createMockRequest('GET', { q: '2024' });
     const res = createMockResponse();
@@ -58,7 +60,7 @@ describe('Search API Handler', () => {
       content: '# Test',
       playlist: [],
     };
-    getSortedMixesSpy.mockResolvedValue([mockMix]);
+    mockGetSortedMixes.mockResolvedValue([mockMix]);
 
     const req = createMockRequest('GET', { q: 'amazing' });
     const res = createMockResponse();
@@ -73,7 +75,7 @@ describe('Search API Handler', () => {
 
   test('returns results matching query in playlist tracks', async () => {
     const mockMixes = [mockMixWithPlaylist];
-    getSortedMixesSpy.mockResolvedValue(mockMixes);
+    mockGetSortedMixes.mockResolvedValue(mockMixes);
 
     const req = createMockRequest('GET', { q: 'bing crosby' });
     const res = createMockResponse();
@@ -111,7 +113,7 @@ describe('Search API Handler', () => {
         { name: 'Song 5', singer: 'Test Artist', musicSrc: '', cover: '' },
       ],
     };
-    getSortedMixesSpy.mockResolvedValue([mockMixWithManyTracks]);
+    mockGetSortedMixes.mockResolvedValue([mockMixWithManyTracks]);
 
     const req = createMockRequest('GET', { q: 'test artist' });
     const res = createMockResponse();
@@ -126,7 +128,7 @@ describe('Search API Handler', () => {
 
   test('case-insensitive search works correctly', async () => {
     const mockMixes = [mockMixWithPlaylist];
-    getSortedMixesSpy.mockResolvedValue(mockMixes);
+    mockGetSortedMixes.mockResolvedValue(mockMixes);
 
     const req = createMockRequest('GET', { q: 'BING CROSBY' });
     const res = createMockResponse();
@@ -155,7 +157,7 @@ describe('Search API Handler', () => {
 
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({ results: [] });
-    expect(getSortedMixesSpy).not.toHaveBeenCalled();
+    expect(mockGetSortedMixes).not.toHaveBeenCalled();
   });
 
   test('missing query parameter returns empty results', async () => {
@@ -166,7 +168,7 @@ describe('Search API Handler', () => {
 
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({ results: [] });
-    expect(getSortedMixesSpy).not.toHaveBeenCalled();
+    expect(mockGetSortedMixes).not.toHaveBeenCalled();
   });
 
   test('non-string query parameter returns empty results', async () => {
@@ -181,7 +183,7 @@ describe('Search API Handler', () => {
 
   test('no matching results returns empty array', async () => {
     const mockMixes = [mockMixWithPlaylist];
-    getSortedMixesSpy.mockResolvedValue(mockMixes);
+    mockGetSortedMixes.mockResolvedValue(mockMixes);
 
     const req = createMockRequest('GET', { q: 'nonexistent query' });
     const res = createMockResponse();
@@ -219,7 +221,7 @@ describe('Search API Handler', () => {
   });
 
   test('handles getSorted Mixes error gracefully', async () => {
-    getSortedMixesSpy.mockImplementationOnce(() => Promise.reject(new Error('Database error')));
+    mockGetSortedMixes.mockImplementationOnce(() => Promise.reject(new Error('Database error')));
 
     const req = createMockRequest('GET', { q: 'test' });
     const res = createMockResponse();
@@ -235,7 +237,9 @@ describe('Search API Handler', () => {
   });
 
   test('error response structure is correct', async () => {
-    getSortedMixesSpy.mockImplementationOnce(() => Promise.reject(new Error('Test error message')));
+    mockGetSortedMixes.mockImplementationOnce(() =>
+      Promise.reject(new Error('Test error message'))
+    );
 
     const req = createMockRequest('GET', { q: 'test' });
     const res = createMockResponse();
@@ -256,7 +260,7 @@ describe('Search API Handler', () => {
 
   test('handles mixes without playlists correctly', async () => {
     const mockMixes = [mockMixWithoutPlaylist];
-    getSortedMixesSpy.mockResolvedValue(mockMixes);
+    mockGetSortedMixes.mockResolvedValue(mockMixes);
 
     const req = createMockRequest('GET', { q: '2023' });
     const res = createMockResponse();
@@ -286,7 +290,7 @@ describe('Search API Handler', () => {
         content: 'This mix features wonderful holiday classics from the golden age',
       },
     ];
-    getSortedMixesSpy.mockResolvedValue(mockMixes);
+    mockGetSortedMixes.mockResolvedValue(mockMixes);
 
     const req = createMockRequest('GET', { q: 'golden age' });
     const res = createMockResponse();
