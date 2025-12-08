@@ -200,7 +200,7 @@
 }
 
 .dark .mix-title {
-  color: theme("colors.beige");
+  color: theme("colors.primary.light");
 }
 
 /* Mix description */
