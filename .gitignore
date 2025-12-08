@@ -40,3 +40,4 @@ yarn.lock
 
 # Local Netlify folder
 .netlify
+.playwright-mcp/

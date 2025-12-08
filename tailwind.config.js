@@ -61,6 +61,8 @@ module.exports = {
         26: '6.5rem', // 104px (13 * 8px)
       },
       // Design System: Animation Tokens
+
+      // Design System: Animation Tokens
       transitionDuration: {
         fast: '150ms',
         normal: '250ms',
