@@ -189,7 +189,10 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
               })}
             </ol>*/}
             <PlaylistDisplay tracks={post.playlist} />
-            <ReactJkMusicPlayer {...options} />
+            {/* Only show player if playlist has actual audio sources */}
+            {post.playlist.some((track) => track.musicSrc && track.musicSrc.trim() !== '') && (
+              <ReactJkMusicPlayer {...options} />
+            )}
           </>
         )}
         <hr className="mt-4" />
