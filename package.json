@@ -15,8 +15,7 @@
     "test-spotify": "node scripts/test-spotify-credentials.js",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
-    "format": "biome format --write .",
-    "postinstall": "npm rebuild mozjpeg --build-from-source && npm rebuild optipng-bin --build-from-source && npm rebuild pngquant-bin --build-from-source"
+    "format": "biome format --write ."
   },
   "dependencies": {
     "@svgr/webpack": "^6.1.1",
@@ -66,7 +65,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run cache-posts && git add cache/data.js"
+      "pre-commit": "pnpm run cache-posts && git add cache/data.js"
     }
   },
   "license": "MIT",
@@ -80,6 +79,14 @@
     "blog",
     "template"
   ],
+  "resolutions": {
+    "sharp": "^0.33.5"
+  },
+  "pnpm": {
+    "overrides": {
+      "sharp": "^0.33.5"
+    }
+  },
   "volta": {
     "node": "20.18.2"
   },
