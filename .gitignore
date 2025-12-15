@@ -41,3 +41,7 @@ yarn.lock
 # Local Netlify folder
 .netlify
 .playwright-mcp/
+
+# Playwright test results
+playwright-report/
+test-results/

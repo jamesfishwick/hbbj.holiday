@@ -1,8 +1,5 @@
 [build]
   publish = "out"
-  command = "node scripts/generate-sitemap.mjs && pnpm run build && pnpm run export"
+  command = "node scripts/generate-search-data.mjs && node scripts/generate-sitemap.mjs && pnpm run build && pnpm run export"
 
-  environment = { NODE_VERSION = "20.18.2", NETLIFY_NEXT_PLUGIN_SKIP = "true", SHARP_IGNORE_GLOBAL_LIBVIPS = "1", npm_config_platform = "linux", npm_config_arch = "x64" }
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+  environment = { NODE_VERSION = "20.18.2", SHARP_IGNORE_GLOBAL_LIBVIPS = "1", npm_config_platform = "linux", npm_config_arch = "x64" }

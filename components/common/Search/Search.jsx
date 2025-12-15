@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export default function Search() {
   const router = useRouter();
@@ -9,8 +9,73 @@ export default function Search() {
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [searchData, setSearchData] = useState(null);
 
-  const searchEndpoint = useCallback((query) => `/api/search?q=${query}`, []);
+  // Load search data on component mount
+  useEffect(() => {
+    const loadSearchData = async () => {
+      try {
+        const res = await fetch('/search-data.json');
+        if (!res.ok) throw new Error('Failed to load search data');
+        const data = await res.json();
+        setSearchData(data);
+      } catch (err) {
+        console.error('Failed to load search data:', err);
+        setError('Search is currently unavailable');
+      }
+    };
+
+    loadSearchData();
+  }, []);
+
+  const performSearch = useCallback(
+    (searchQuery) => {
+      if (!searchData || !searchQuery) {
+        return [];
+      }
+
+      const query = searchQuery.toLowerCase();
+
+      return searchData
+        .filter((mix) => {
+          // Search in mix metadata
+          const contentSearchable = [mix.title, mix.description, mix.contentPreview]
+            .join(' ')
+            .toLowerCase();
+
+          // Search in playlist data
+          const playlistSearchable = mix.tracks
+            .map((track) => `${track.name} ${track.artist}`)
+            .join(' ')
+            .toLowerCase();
+
+          // Match if query is found in either content or playlist
+          return contentSearchable.includes(query) || playlistSearchable.includes(query);
+        })
+        .map((mix) => {
+          // Find matching tracks if any
+          const matchingTracks = mix.tracks
+            .filter(
+              (track) =>
+                track.name.toLowerCase().includes(query) ||
+                track.artist.toLowerCase().includes(query)
+            )
+            .slice(0, 3); // Limit to first 3 matching tracks
+
+          return {
+            id: mix.id,
+            title: mix.title,
+            description: mix.description,
+            year: mix.title,
+            matchingTracks: matchingTracks.map((track) => ({
+              name: track.name,
+              artist: track.artist,
+            })),
+          };
+        });
+    },
+    [searchData]
+  );
 
   const onClick = useCallback((event) => {
     if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -25,7 +90,7 @@ export default function Search() {
   }, [onClick]);
 
   const onChange = useCallback(
-    async (event) => {
+    (event) => {
       const query = event.target.value;
       setQuery(query);
       setError(null);
@@ -33,12 +98,9 @@ export default function Search() {
       if (query.length) {
         setIsLoading(true);
         try {
-          const res = await fetch(searchEndpoint(query));
-          if (!res.ok) throw new Error('Failed to search');
-          const data = await res.json();
-          setResults(data.results);
+          const searchResults = performSearch(query);
+          setResults(searchResults);
         } catch (err) {
-          // eslint-disable-next-line no-console
           console.error('Search error:', err);
           setError('An error occurred while searching');
           setResults([]);
@@ -49,7 +111,7 @@ export default function Search() {
         setResults([]);
       }
     },
-    [searchEndpoint]
+    [performSearch]
   );
 
   const onResultClick = (id) => {
@@ -144,7 +206,7 @@ export default function Search() {
 
       {active && !isLoading && error && (
         <div
-          className="absolute w-full mt-2 p-4 text-center bg-white border border-gray-300 
+          className="absolute w-full mt-2 p-4 text-center bg-white border border-gray-300
                       rounded-lg shadow-lg dark:bg-dark-blue dark:border-gray-600 z-50"
         >
           <p className="text-red-500 dark:text-red-400">{error}</p>
@@ -153,7 +215,7 @@ export default function Search() {
 
       {active && query && !isLoading && !error && results.length === 0 && (
         <div
-          className="absolute w-full mt-2 p-4 text-center bg-white border border-gray-300 
+          className="absolute w-full mt-2 p-4 text-center bg-white border border-gray-300
                       rounded-lg shadow-lg dark:bg-dark-blue dark:border-gray-600 z-50"
         >
           <p className="text-gray-600 dark:text-gray-400">
