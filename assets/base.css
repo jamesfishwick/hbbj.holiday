@@ -86,10 +86,10 @@ p {
 
 @keyframes memphis-wiggle {
   0%, 100% {
-    transform: rotate(-1deg);
+    transform: rotate(calc(var(--base-rotation, 0deg) - 1deg));
   }
   50% {
-    transform: rotate(1deg);
+    transform: rotate(calc(var(--base-rotation, 0deg) + 1deg));
   }
 }
 

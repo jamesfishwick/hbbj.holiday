@@ -27,10 +27,15 @@ export default function MetadataBadge({
         transition-all duration-200
         hover:scale-105 hover:shadow-lg
         cursor-default
+        pointer-events-none
         ${shapeClasses[shape] || shapeClasses.rounded}
         ${className}
       `}
-      style={{ transform: `rotate(${rotation}deg)` }}
+      style={{
+        '--base-rotation': `${rotation}deg`,
+        animation: 'memphis-wiggle 4s ease-in-out infinite',
+        textDecoration: 'none !important',
+      }}
     >
       {children}
     </span>
