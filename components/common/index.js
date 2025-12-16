@@ -3,6 +3,8 @@ export * from './ErrorBoundary';
 export * from './Heading';
 export * from './Image';
 export * from './Layout';
+export * from './MemphisShape';
+export { default as MetadataBadge } from './MetadataBadge/MetadataBadge';
 export * from './MixCardSkeleton';
 export * from './Playlist';
 export * from './Search';
