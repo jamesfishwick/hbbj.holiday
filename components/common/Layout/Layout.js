@@ -1,14 +1,16 @@
 import { getSiteMetaData } from '@utils/helpers';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 import Search from '../Search/Search';
+
 export function Layout({ children }) {
   return (
     <div className="min-h-screen bg-dark-blue text-cream">
       {/* Skip to main content link for accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded-md focus:shadow-lg"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-6 focus:py-3 focus:min-h-[44px] focus:inline-flex focus:items-center focus:bg-accent focus:text-white focus:rounded-md focus:shadow-lg"
       >
         Skip to main content
       </a>
@@ -68,7 +70,10 @@ export function Layout({ children }) {
         </main>
         <footer className="site-footer text-lg font-light">
           © {new Date().getFullYear()}, Built with{' '}
-          <a href="https://nextjs.org/" className="text-dark-red hover:opacity-80">
+          <a
+            href="https://nextjs.org/"
+            className="inline-flex items-center min-h-[44px] py-2 text-dark-red hover:text-accent transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-accent"
+          >
             Next.js
           </a>
         </footer>
@@ -105,7 +110,7 @@ const Header = () => {
 const LargeTitle = ({ title }) => (
   <h1>
     <Link href="/">
-      <a className="text-4xl sm:text-5xl font-black leading-tight no-underline font-display text-primary-light hover:text-accent transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-accent">
+      <a className="inline-block text-4xl sm:text-5xl font-black leading-tight no-underline font-display text-primary-light hover:text-accent transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-accent py-2">
         {title}
       </a>
     </Link>
@@ -115,11 +120,15 @@ const LargeTitle = ({ title }) => (
 const SmallTitle = ({ title }) => (
   <h1>
     <Link href="/">
-      <a className="text-2xl font-black no-underline font-display text-primary-light hover:text-accent transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-accent">
+      <a className="inline-flex items-center min-h-[44px] text-2xl font-black no-underline font-display text-primary-light hover:text-accent transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-accent py-2">
         {title}
       </a>
     </Link>
   </h1>
 );
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default Layout;

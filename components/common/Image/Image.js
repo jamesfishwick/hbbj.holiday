@@ -1,4 +1,5 @@
 import 'lazysizes';
+import PropTypes from 'prop-types';
 
 export function Image({ alt, src, previewSrc, webpSrc, className }) {
   // Extract srcSet from webpack module objects or use as-is if string
@@ -18,3 +19,11 @@ export function Image({ alt, src, previewSrc, webpSrc, className }) {
     </picture>
   );
 }
+
+Image.propTypes = {
+  alt: PropTypes.string.isRequired,
+  src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  previewSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  webpSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  className: PropTypes.string,
+};

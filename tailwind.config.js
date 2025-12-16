@@ -51,7 +51,18 @@ module.exports = {
         'light-blue': '#B2DCF4',
       },
       fontSize: {
+        // Fluid typography using clamp() for responsive scaling
+        // Format: clamp(min, preferred, max)
         '7xl': '4.5rem',
+        // Display headings: scale from 3rem (mobile) to 4.5rem (desktop)
+        '6xl': 'clamp(3rem, 5vw + 1rem, 4.5rem)', // 48px -> 72px
+        '5xl': 'clamp(2.5rem, 4vw + 1rem, 3.75rem)', // 40px -> 60px
+        // Section headings: scale from 1.75rem to 2.5rem
+        '4xl': 'clamp(1.75rem, 3vw + 1rem, 2.5rem)', // 28px -> 40px
+        // Subsection headings: scale from 1.25rem to 1.75rem
+        '2xl': 'clamp(1.25rem, 2vw + 0.75rem, 1.75rem)', // 20px -> 28px
+        // Card headings: scale from 1.125rem to 1.5rem
+        xl: 'clamp(1.125rem, 1.5vw + 0.75rem, 1.5rem)', // 18px -> 24px
       },
       spacing: {
         // 8px base spacing scale for consistency

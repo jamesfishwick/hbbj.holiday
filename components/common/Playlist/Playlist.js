@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export function PlaylistDisplay({ tracks = [] }) {
   if (!tracks || !Array.isArray(tracks) || tracks.length === 0) {
     return null;
@@ -33,15 +35,17 @@ export function PlaylistDisplay({ tracks = [] }) {
       </div>
 
       {/* Track List */}
-      <div className="space-y-2">
+      <div className="space-y-0">
         {tracks.map((track, index) => (
           <div
             key={`${track.name}-${track.singer || track.artist}-${index}`}
-            className="group flex items-center gap-4 p-3 rounded-md
-                     hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            className={`group flex items-center gap-4 p-3 rounded-md
+                     hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors
+                     ${index % 2 === 0 ? 'bg-white dark:bg-dark-blue' : 'bg-gray-50 dark:bg-gray-900 bg-opacity-50'}
+                     ${(index + 1) % 5 === 0 && index !== tracks.length - 1 ? 'mb-2 pb-1 border-b-2 border-gray-200 dark:border-gray-700' : ''}`}
           >
             {/* Track Number */}
-            <span className="w-8 text-right font-mono text-sm text-gray-500 dark:text-gray-400">
+            <span className="w-8 text-right font-mono text-sm text-teal dark:text-light-blue">
               {String(index + 1).padStart(2, '0')}
             </span>
 
@@ -67,6 +71,21 @@ export function PlaylistDisplay({ tracks = [] }) {
     </div>
   );
 }
+
+PlaylistDisplay.propTypes = {
+  tracks: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      singer: PropTypes.string,
+      artist: PropTypes.string,
+      duration: PropTypes.number,
+    })
+  ),
+};
+
+PlaylistDisplay.defaultProps = {
+  tracks: [],
+};
 
 const formatDuration = (seconds) => {
   if (!seconds) return '--:--';

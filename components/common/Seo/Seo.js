@@ -1,5 +1,6 @@
 import { getSiteMetaData } from '@utils/helpers';
 import Head from 'next/head';
+import PropTypes from 'prop-types';
 
 export function SEO({
   title,
@@ -253,3 +254,31 @@ export function SEO({
     </Head>
   );
 }
+
+SEO.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  image: PropTypes.string,
+  article: PropTypes.bool,
+  publishedDate: PropTypes.string,
+  modifiedDate: PropTypes.string,
+  slug: PropTypes.string,
+  playlist: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      musicName: PropTypes.string,
+      singer: PropTypes.string,
+      artist: PropTypes.string,
+    })
+  ),
+};
+
+SEO.defaultProps = {
+  description: '',
+  image: '',
+  article: false,
+  publishedDate: '',
+  modifiedDate: '',
+  slug: '',
+  playlist: null,
+};
