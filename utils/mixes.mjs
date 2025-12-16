@@ -7,11 +7,20 @@ let cachedMixes = null;
 
 function getMixesFolders() {
   // Get all mixes folders located in `content/mixes`
-  const postsFolders = fs.readdirSync(`${process.cwd()}/content/mixes`).map((folderName) => ({
-    directory: folderName,
-    filename: `${folderName}.md`,
-    playlist: `${folderName}.m3u8`,
-  }));
+  const mixesPath = `${process.cwd()}/content/mixes`;
+  const postsFolders = fs
+    .readdirSync(mixesPath)
+    .filter((folderName) => {
+      // Filter out system files and non-directories
+      if (folderName.startsWith('.')) return false;
+      const fullPath = `${mixesPath}/${folderName}`;
+      return fs.statSync(fullPath).isDirectory();
+    })
+    .map((folderName) => ({
+      directory: folderName,
+      filename: `${folderName}.md`,
+      playlist: `${folderName}.m3u8`,
+    }));
 
   return postsFolders;
 }
