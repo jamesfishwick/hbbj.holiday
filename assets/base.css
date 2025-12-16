@@ -40,6 +40,79 @@ p {
   @apply font-display text-xl font-medium text-light-blue mb-2;
 }
 
+/* Memphis Design System Utilities */
+.border-3 {
+  border-width: 3px;
+}
+
+.border-4 {
+  border-width: 4px;
+}
+
+.clip-pentagon {
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+}
+
+.memphis-rotate-sm {
+  transform: rotate(-2deg);
+}
+
+.memphis-rotate-md {
+  transform: rotate(2deg);
+}
+
+.memphis-rotate-lg {
+  transform: rotate(-3deg);
+}
+
+/* Memphis Hover Effects and Animations */
+@keyframes memphis-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes memphis-pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes memphis-wiggle {
+  0%, 100% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+.memphis-hover-scale {
+  transition: transform 250ms ease-out;
+}
+
+.memphis-hover-scale:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+.memphis-float {
+  animation: memphis-float 3s ease-in-out infinite;
+}
+
+.memphis-pulse {
+  animation: memphis-pulse 2s ease-in-out infinite;
+}
+
+.memphis-wiggle {
+  animation: memphis-wiggle 4s ease-in-out infinite;
+}
+
 /* Print Styles */
 @media print {
   /* Hide interactive and decorative elements */
