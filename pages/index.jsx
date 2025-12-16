@@ -13,18 +13,20 @@ export default function Home({ mixes }) {
       {mixes.map(({ frontmatter: { title, description }, slug }) => (
         <article
           key={slug}
-          className="mb-8 rounded-lg overflow-hidden border border-light-blue border-opacity-20 hover:border-opacity-40 hover:bg-dark-blue hover:bg-opacity-30 transition-colors duration-normal focus-within:ring-2 focus-within:ring-accent"
+          className="mb-8 rounded-lg overflow-hidden border border-light-blue border-opacity-20 hover:border-opacity-40 hover:bg-dark-blue hover:bg-opacity-30 shadow-md hover:shadow-xl transform hover:scale-102 transition-all duration-normal focus-within:ring-2 focus-within:ring-accent"
           aria-labelledby={`mix-title-${slug}`}
         >
           <Link href={'/mix/[slug]'} as={`/mix/${slug}`}>
-            <a className="block focus:outline-none">
-              <Image
-                alt={`Happy Birthday Baby Jesus ${title} Christmas Music Playlist - Curated Holiday Songs`}
-                src={require(`../content/assets/${title}.jpg`)}
-                webpSrc={require(`../content/assets/${title}.jpg?webp`)}
-                previewSrc={require(`../content/assets/${title}.jpg?lqip`)}
-                className="w-full"
-              />
+            <a className="block focus:outline-none group">
+              <div className="overflow-hidden">
+                <Image
+                  alt={`Happy Birthday Baby Jesus ${title} Christmas Music Playlist - Curated Holiday Songs`}
+                  src={require(`../content/assets/${title}.jpg`)}
+                  webpSrc={require(`../content/assets/${title}.jpg?webp`)}
+                  previewSrc={require(`../content/assets/${title}.jpg?lqip`)}
+                  className="w-full max-h-[736px] object-contain transition-transform duration-300 group-hover:scale-110"
+                />
+              </div>
               <div className="p-6">
                 <h3
                   id={`mix-title-${slug}`}
@@ -32,7 +34,9 @@ export default function Home({ mixes }) {
                 >
                   {title}
                 </h3>
-                <p className="text-lg text-cream text-opacity-90 leading-relaxed">{description}</p>
+                <p className="text-lg text-cream text-opacity-90 leading-relaxed inline-block">
+                  {description}
+                </p>
               </div>
             </a>
           </Link>
