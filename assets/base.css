@@ -22,3 +22,84 @@ p {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Typography System: Heading Utility Classes */
+.heading-display {
+  @apply font-display text-5xl sm:text-6xl font-bold text-light-blue mb-6;
+}
+
+.heading-section {
+  @apply font-display text-4xl font-bold text-light-blue mb-4;
+}
+
+.heading-subsection {
+  @apply font-display text-2xl font-semibold text-cream mb-3;
+}
+
+.heading-card {
+  @apply font-display text-xl font-medium text-light-blue mb-2;
+}
+
+/* Print Styles */
+@media print {
+  /* Hide interactive and decorative elements */
+  .lightrope,
+  nav,
+  button,
+  [role="search"],
+  .react-jinke-music-player,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Ensure readable typography */
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+  }
+
+  /* High contrast for headings */
+  h1, h2, h3, h4, h5, h6 {
+    color: #000;
+    page-break-after: avoid;
+  }
+
+  /* Avoid breaking inside elements */
+  article,
+  section,
+  pre,
+  blockquote,
+  img {
+    page-break-inside: avoid;
+  }
+
+  /* Show link URLs */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 90%;
+    color: #666;
+  }
+
+  /* Don't show URLs for internal links */
+  a[href^="#"]:after,
+  a[href^="/"]:after {
+    content: "";
+  }
+
+  /* Ensure images fit on page */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Add page breaks before major sections */
+  article {
+    page-break-before: always;
+  }
+
+  article:first-of-type {
+    page-break-before: avoid;
+  }
+}
