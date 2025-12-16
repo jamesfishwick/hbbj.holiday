@@ -1,9 +1,15 @@
 //import 'react-jinke-music-player/assets/index.css'
 import { Bio, Image, Layout, PlaylistDisplay, SEO } from '@components/common';
 import { getPostBySlug, getPostsSlugs } from '@utils/mixes';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown/with-html';
 import ReactJkMusicPlayer from '../player';
+
+// Import Search component dynamically to avoid SSR issues
+const Search = dynamic(() => import('@components/common/Search/Search'), {
+  ssr: false,
+});
 
 export default function Post({ post, frontmatter, nextPost, previousPost }) {
   const options = {
@@ -172,6 +178,11 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
           </h1>
           {/* <p className="text-sm">{frontmatter.date}</p> */}
         </header>
+
+        {/* Search component for quick navigation to other mixes */}
+        <div className="mb-8">
+          <Search />
+        </div>
 
         <ReactMarkdown
           className="mb-4 prose lg:prose-lg dark:prose-dark"
