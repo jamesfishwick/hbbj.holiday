@@ -14,8 +14,6 @@
     "test:watch": "jest --watch",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "fetch-spotify": "node scripts/fetch-spotify-playlists.js",
-    "test-spotify": "node scripts/test-spotify-credentials.js",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write ."
@@ -38,6 +36,7 @@
     "next-lqip-images": "^0.1.0",
     "next-optimized-images": "^2.6.2",
     "next-themes": "^0.0.15",
+    "prop-types": "^15.8.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-jinke-music-player": "^4.19.1",
