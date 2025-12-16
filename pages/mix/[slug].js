@@ -215,14 +215,18 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
       <nav className="flex flex-wrap justify-between mb-10">
         {previousPost ? (
           <Link href={'/mix/[slug]'} as={`/mix/${previousPost.slug}`}>
-            <a className="text-lg font-bold hover:opacity-80">← {previousPost.frontmatter.title}</a>
+            <a className="inline-flex items-center min-h-[44px] py-3 text-lg font-bold text-teal hover:text-light-blue transition-colors duration-200">
+              ← {previousPost.frontmatter.title}
+            </a>
           </Link>
         ) : (
           <div />
         )}
         {nextPost ? (
           <Link href={'/mix/[slug]'} as={`/mix/${nextPost.slug}`}>
-            <a className="text-lg font-bold hover:opacity-80">{nextPost.frontmatter.title} →</a>
+            <a className="inline-flex items-center min-h-[44px] py-3 text-lg font-bold text-teal hover:text-light-blue transition-colors duration-200">
+              {nextPost.frontmatter.title} →
+            </a>
           </Link>
         ) : (
           <div />
