@@ -1,5 +1,18 @@
 //import 'react-jinke-music-player/assets/index.css'
-import { Bio, Image, Layout, PlaylistDisplay, SEO } from '@components/common';
+import {
+  Bio,
+  Blob,
+  Circle,
+  Dots,
+  Image,
+  Layout,
+  MetadataBadge,
+  PlaylistDisplay,
+  SEO,
+  Squiggle,
+  Triangle,
+} from '@components/common';
+import { extractMetadata } from '@utils/extractMetadata';
 import { getPostBySlug, getPostsSlugs } from '@utils/mixes';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
@@ -11,7 +24,16 @@ const Search = dynamic(() => import('@components/common/Search/Search'), {
   ssr: false,
 });
 
+// Seeded random number generator for deterministic randomness
+function seededRandom(seed) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
 export default function Post({ post, frontmatter, nextPost, previousPost }) {
+  // Ensure title is always a string for calculations
+  const titleString = String(frontmatter.title);
+
   const options = {
     // audio lists model
     audioLists: post.playlist,
@@ -161,26 +183,72 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
   return (
     <Layout>
       <SEO
-        title={frontmatter.title}
+        title={titleString}
         description={frontmatter.description || post.excerpt}
         article={true}
         publishedDate={frontmatter.date}
         modifiedDate={frontmatter.date}
         slug={post.slug}
-        image={`/${frontmatter.title}/${frontmatter.title}.jpg`}
+        image={`/${titleString}/${titleString}.jpg`}
         playlist={post.playlist}
       />
 
-      <article>
-        <header className="mb-8">
-          <h1 className="mb-4 text-4xl font-bold leading-tight font-display text-light-blue">
+      <article className="relative mb-8 rounded-lg border-3 border-teal border-opacity-25 hover:border-opacity-40 hover:bg-dark-blue hover:bg-opacity-20 shadow-md hover:shadow-xl transition-all duration-normal overflow-hidden p-6">
+        {/* Memphis decorative shapes */}
+        <Circle
+          className="absolute -top-4 -right-4 w-20 h-20 text-light-blue opacity-15"
+          filled={false}
+          strokeWidth={3}
+        />
+        <Triangle
+          className="absolute top-20 right-8 w-16 h-16 text-accent opacity-20"
+          rotation={seededRandom(titleString.length * 11) * 360}
+          filled={true}
+        />
+        <Blob
+          className="absolute bottom-20 left-4 text-teal opacity-10"
+          size={100}
+          variant={Math.floor(seededRandom(titleString.length * 13) * 3) + 1}
+        />
+        <Dots
+          className="absolute bottom-8 right-12 w-12 h-12 text-light-blue opacity-25"
+          dotSize={6}
+        />
+        <Squiggle
+          className="absolute top-1/3 left-2 text-accent opacity-20"
+          width={80}
+          strokeWidth={2}
+        />
+
+        <header className="relative mb-8 z-10">
+          <h1 className="mb-4 text-4xl font-bold leading-tight font-festive text-light-blue wavy-underline">
             {frontmatter.title}
           </h1>
-          {/* <p className="text-sm">{frontmatter.date}</p> */}
+
+          {/* Metadata badges */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {extractMetadata(frontmatter.description, post.content).map((badge, badgeIndex) => {
+              // Deterministic rotation based on badge index
+              const rotations = [-1.5, 2, -2.5, 1.5];
+              const badgeRotation = rotations[badgeIndex % rotations.length];
+
+              return (
+                <MetadataBadge key={badge} shape="rounded" rotation={badgeRotation}>
+                  {badge}
+                </MetadataBadge>
+              );
+            })}
+          </div>
         </header>
 
         {/* Search component for quick navigation to other mixes */}
-        <div className="mb-8">
+        <div className="relative mb-8">
+          <Circle className="absolute -top-2 -left-2 w-8 h-8 text-teal opacity-30" filled={true} />
+          <Triangle
+            className="absolute -bottom-2 -right-2 w-10 h-10 text-accent opacity-20"
+            rotation={45}
+            filled={false}
+          />
           <Search />
         </div>
 
@@ -191,7 +259,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
           renderers={{ image: MarkdownImage }}
         />
         {Array.isArray(post.playlist) && post.playlist.length > 0 && (
-          <>
+          <div className="relative">
             {/*<ol style={{ listStyle: "decimal" }}>
               {post.playlist.map(function (track) {
                 return (
@@ -199,12 +267,21 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
                 );
               })}
             </ol>*/}
+            <Squiggle
+              className="absolute -top-4 right-4 text-light-blue opacity-15"
+              width={100}
+              strokeWidth={3}
+            />
+            <Dots
+              className="absolute -bottom-2 left-4 w-10 h-10 text-accent opacity-25"
+              dotSize={5}
+            />
             <PlaylistDisplay tracks={post.playlist} />
             {/* Only show player if playlist has actual audio sources */}
             {post.playlist.some((track) => track.musicSrc && track.musicSrc.trim() !== '') && (
               <ReactJkMusicPlayer {...options} />
             )}
-          </>
+          </div>
         )}
         <hr className="mt-4" />
         <footer>
@@ -212,22 +289,35 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
         </footer>
       </article>
 
-      <nav className="flex flex-wrap justify-between mb-10">
+      <nav className="flex flex-wrap justify-between mb-10 gap-4">
         {previousPost ? (
-          <Link href={'/mix/[slug]'} as={`/mix/${previousPost.slug}`}>
-            <a className="inline-flex items-center min-h-[44px] py-3 text-lg font-bold text-teal hover:text-light-blue transition-colors duration-200">
-              ← {previousPost.frontmatter.title}
-            </a>
-          </Link>
+          <div className="relative group">
+            <Circle
+              className="absolute -top-2 -left-2 w-8 h-8 text-light-blue opacity-0 group-hover:opacity-30 transition-opacity duration-200"
+              filled={true}
+            />
+            <Link href={'/mix/[slug]'} as={`/mix/${previousPost.slug}`}>
+              <a className="relative inline-flex items-center min-h-[44px] px-4 py-3 text-lg font-bold text-teal hover:text-light-blue border-3 border-teal border-opacity-30 hover:border-opacity-50 rounded-lg bg-teal bg-opacity-5 hover:bg-opacity-10 transition-all duration-200 hover:scale-105 z-10">
+                ← {previousPost.frontmatter.title}
+              </a>
+            </Link>
+          </div>
         ) : (
           <div />
         )}
         {nextPost ? (
-          <Link href={'/mix/[slug]'} as={`/mix/${nextPost.slug}`}>
-            <a className="inline-flex items-center min-h-[44px] py-3 text-lg font-bold text-teal hover:text-light-blue transition-colors duration-200">
-              {nextPost.frontmatter.title} →
-            </a>
-          </Link>
+          <div className="relative group">
+            <Triangle
+              className="absolute -bottom-2 -right-2 w-10 h-10 text-accent opacity-0 group-hover:opacity-20 transition-opacity duration-200"
+              rotation={30}
+              filled={false}
+            />
+            <Link href={'/mix/[slug]'} as={`/mix/${nextPost.slug}`}>
+              <a className="relative inline-flex items-center min-h-[44px] px-4 py-3 text-lg font-bold text-teal hover:text-light-blue border-3 border-teal border-opacity-30 hover:border-opacity-50 rounded-lg bg-teal bg-opacity-5 hover:bg-opacity-10 transition-all duration-200 hover:scale-105 z-10">
+                {nextPost.frontmatter.title} →
+              </a>
+            </Link>
+          </div>
         ) : (
           <div />
         )}
