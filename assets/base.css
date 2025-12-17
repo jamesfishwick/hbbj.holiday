@@ -1,5 +1,12 @@
-a:hover {
+/* Only underline headings inside links with yellow color, not badges or paragraphs */
+a:hover h1,
+a:hover h2,
+a:hover h3,
+a:hover h4,
+a:hover h5,
+a:hover h6 {
   @apply underline;
+  text-decoration-color: #FCD34D;
 }
 
 span,
@@ -86,10 +93,10 @@ p {
 
 @keyframes memphis-wiggle {
   0%, 100% {
-    transform: rotate(calc(var(--base-rotation, 0deg) - 1deg));
+    transform: rotate(calc(var(--base-rotation, 0deg) - 3deg));
   }
   50% {
-    transform: rotate(calc(var(--base-rotation, 0deg) + 1deg));
+    transform: rotate(calc(var(--base-rotation, 0deg) + 3deg));
   }
 }
 
