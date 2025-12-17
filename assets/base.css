@@ -1,5 +1,12 @@
-a:hover {
+/* Only underline headings inside links with yellow color, not badges or paragraphs */
+a:hover h1,
+a:hover h2,
+a:hover h3,
+a:hover h4,
+a:hover h5,
+a:hover h6 {
   @apply underline;
+  text-decoration-color: #FCD34D;
 }
 
 span,
@@ -38,6 +45,108 @@ p {
 
 .heading-card {
   @apply font-display text-xl font-medium text-light-blue mb-2;
+}
+
+/* Memphis Design System Utilities */
+.border-3 {
+  border-width: 3px;
+}
+
+.border-4 {
+  border-width: 4px;
+}
+
+.clip-pentagon {
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+}
+
+.memphis-rotate-sm {
+  transform: rotate(-2deg);
+}
+
+.memphis-rotate-md {
+  transform: rotate(2deg);
+}
+
+.memphis-rotate-lg {
+  transform: rotate(-3deg);
+}
+
+/* Memphis Hover Effects and Animations */
+@keyframes memphis-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes memphis-pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes memphis-wiggle {
+  0%, 100% {
+    transform: rotate(calc(var(--base-rotation, 0deg) - 1deg));
+  }
+  50% {
+    transform: rotate(calc(var(--base-rotation, 0deg) + 1deg));
+  }
+}
+
+.memphis-hover-scale {
+  transition: transform 250ms ease-out;
+}
+
+.memphis-hover-scale:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+.memphis-float {
+  animation: memphis-float 3s ease-in-out infinite;
+}
+
+.memphis-pulse {
+  animation: memphis-pulse 2s ease-in-out infinite;
+}
+
+.memphis-wiggle {
+  animation: memphis-wiggle 6s ease-in-out infinite;
+}
+
+.wavy-underline {
+  position: relative;
+}
+
+.wavy-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 100%;
+  height: 6px;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='6' viewBox='0 0 100 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 3 Q 12.5 0, 25 3 T 50 3 T 75 3 T 100 3' stroke='%2329AFBB' stroke-width='3' fill='none'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 100px 6px;
+}
+
+@keyframes bounce-hover {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.02);
+  }
+}
+
+.bounce-on-hover:hover {
+  animation: bounce-hover 0.6s ease-in-out;
 }
 
 /* Print Styles */

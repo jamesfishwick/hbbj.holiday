@@ -145,6 +145,7 @@ module.exports = {
     fontFamily: {
       display: ['Open Sans', ...defaultSans],
       body: ['Merriweather', ...defaultSerif],
+      festive: ['Boogaloo', ...defaultSans],
     },
   },
   plugins: [require('@tailwindcss/typography')],
