@@ -4,6 +4,7 @@ export * from './Heading';
 export * from './Image';
 export * from './Layout';
 export * from './MemphisShape';
+export * from './MetadataBadge';
 export * from './MixCardSkeleton';
 export * from './Playlist';
 export * from './Search';
