@@ -353,7 +353,7 @@ export default function Home({ mixes }) {
         description="Stream the ultimate collection of Christmas music playlists from 2006 to 2024. Discover handpicked holiday hits, classic carols, indie Christmas songs, and hidden festive gems. Curated annually by Sir Lord Selector for the perfect seasonal soundtrack."
       />
       <Bio className="my-14" />
-      {mixes.map(({ frontmatter: { title, description }, slug }, index) => {
+      {mixes.map(({ frontmatter: { title, description }, slug, content }, index) => {
         const cardVariant = getCardVariant(index);
 
         return (
@@ -391,7 +391,7 @@ export default function Home({ mixes }) {
 
                   {/* Metadata badges */}
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {extractMetadata(description).map((badge, badgeIndex) => {
+                    {extractMetadata(description, content).map((badge, badgeIndex) => {
                       // Deterministic rotation based on badge index
                       const rotations = [-1.5, 2, -2.5, 1.5];
                       const badgeRotation = rotations[badgeIndex % rotations.length];
@@ -405,7 +405,7 @@ export default function Home({ mixes }) {
                   </div>
 
                   {/* Description */}
-                  <p className="text-lg text-cream text-opacity-90 leading-relaxed">
+                  <p className="text-lg text-cream text-opacity-90 leading-relaxed inline-block">
                     {description}
                   </p>
                 </div>
