@@ -1,56 +1,94 @@
+import { metadataConfig } from './metadataConfig.js';
+
 /**
- * Extract interesting metadata from mix descriptions
- * Returns array of badge-worthy details
+ * Check if text contains any of the keywords
  */
-export function extractMetadata(description) {
+function containsKeyword(text, keywords) {
+  return keywords.some((keyword) => text.includes(keyword));
+}
+
+/**
+ * Check if text contains any of the exclude keywords
+ */
+function containsExclude(text, excludeKeywords) {
+  if (!excludeKeywords) return false;
+  return excludeKeywords.some((keyword) => text.includes(keyword));
+}
+
+/**
+ * Shuffle array using Fisher-Yates algorithm (seeded for consistency)
+ */
+function shuffleArray(array, seed) {
+  const arr = [...array];
+  let currentIndex = arr.length;
+
+  // Use seed to generate deterministic random numbers
+  let random = seed;
+  const seededRandom = () => {
+    random = (random * 9301 + 49297) % 233280;
+    return random / 233280;
+  };
+
+  while (currentIndex !== 0) {
+    const randomIndex = Math.floor(seededRandom() * currentIndex);
+    currentIndex--;
+    [arr[currentIndex], arr[randomIndex]] = [arr[randomIndex], arr[currentIndex]];
+  }
+
+  return arr;
+}
+
+/**
+ * Extract interesting metadata from mix descriptions and full content
+ * Returns array of badge-worthy details (max 15 randomly selected if more)
+ */
+export function extractMetadata(description, content = '') {
   if (!description) return [];
 
   const badges = [];
+  const combinedText = `${description} ${content}`.toLowerCase();
   const lowerDesc = description.toLowerCase();
 
-  // Rare/limited editions
-  if (lowerDesc.includes('rare') || lowerDesc.includes('obscure')) {
-    badges.push('RARE');
-  }
-  if (lowerDesc.includes('private press') || lowerDesc.includes('self-released')) {
-    badges.push('PRIVATE PRESS');
-  }
-  if (lowerDesc.match(/\d+\s*copies/i)) {
-    const match = description.match(/(\d+)\s*copies/i);
-    if (match) badges.push(`${match[1]} COPIES`);
-  }
-
-  // Genre highlights (limit to 2)
-  const genres = [];
-  if (lowerDesc.includes('punk')) genres.push('PUNK');
-  if (lowerDesc.includes('exotica')) genres.push('EXOTICA');
-  if (lowerDesc.includes('garage')) genres.push('GARAGE');
-  if (lowerDesc.includes('gospel')) genres.push('GOSPEL');
-  if (lowerDesc.includes('psych') || lowerDesc.includes('psychedelic')) genres.push('PSYCH');
-  if (lowerDesc.includes('funk')) genres.push('FUNK');
-  if (lowerDesc.includes('soul')) genres.push('SOUL');
-
-  // Add up to 2 genre badges
-  badges.push(...genres.slice(0, 2));
-
-  // Track lengths
-  if (lowerDesc.match(/\d+[\s-]min/i)) {
-    const match = description.match(/(\d+)[\s-]min/i);
-    if (match && parseInt(match[1], 10) >= 6) {
-      badges.push(`${match[1]}-MIN EPIC`);
+  // Extract rarity markers from description only
+  metadataConfig.rarity.forEach(({ keywords, badge }) => {
+    if (containsKeyword(lowerDesc, keywords)) {
+      badges.push(badge);
     }
+  });
+
+  // Extract pattern-based metadata from description
+  Object.values(metadataConfig.patterns).forEach(({ regex, createBadge }) => {
+    const match = description.match(regex);
+    if (match) {
+      const badge = createBadge(match);
+      if (badge) badges.push(badge);
+    }
+  });
+
+  // Extract genres from combined text
+  const genres = [];
+  metadataConfig.genres.forEach(({ keywords, badge }) => {
+    if (containsKeyword(combinedText, keywords)) {
+      genres.push(badge);
+    }
+  });
+  badges.push(...genres);
+
+  // Extract recording metadata from combined text
+  metadataConfig.recording.forEach(({ keywords, exclude, badge }) => {
+    if (containsKeyword(combinedText, keywords) && !containsExclude(combinedText, exclude)) {
+      badges.push(badge);
+    }
+  });
+
+  // Limit to 15 badges, randomly shuffled (seeded by description length for consistency)
+  if (badges.length > 15) {
+    const seed = description.length * 1000;
+    const shuffled = shuffleArray(badges, seed);
+    return shuffled.slice(0, 15);
   }
 
-  // Other interesting markers
-  if (lowerDesc.includes('vinyl only') || lowerDesc.includes('vinyl-only')) {
-    badges.push('VINYL ONLY');
-  }
-  if (lowerDesc.includes('unreleased')) {
-    badges.push('UNRELEASED');
-  }
-
-  // Return max 3 badges to avoid clutter
-  return badges.slice(0, 3);
+  return badges;
 }
 
 /**
