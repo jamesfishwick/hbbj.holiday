@@ -1,0 +1,3 @@
+- you can kill all the dev servers and spin up new ones as you wish
+- you need to check your work using playwright before you say you are finished
+- always create a proper PR description
