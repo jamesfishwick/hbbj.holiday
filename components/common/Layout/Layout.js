@@ -110,7 +110,7 @@ const Header = () => {
 const LargeTitle = ({ title }) => (
   <h1>
     <Link href="/">
-      <a className="inline-block text-4xl sm:text-5xl font-black leading-tight no-underline font-display text-primary-light hover:text-accent transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-accent py-2">
+      <a className="inline-block text-4xl sm:text-5xl font-black leading-tight no-underline font-festive text-primary-light hover:text-accent transition-all duration-normal focus-visible:ring-2 focus-visible:ring-accent py-2 bounce-on-hover wavy-underline">
         {title}
       </a>
     </Link>
